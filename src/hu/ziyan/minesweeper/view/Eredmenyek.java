@@ -1,4 +1,4 @@
-package hu.ziyan.minesweeper;
+package hu.ziyan.minesweeper.view;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -231,8 +231,8 @@ public class Eredmenyek extends JFrame {
 		btnUjJatek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				JFrame ujAblak = new NehezsegValasztas();
-				ujAblak.setVisible(true);
+				//JFrame ujAblak = new MinesweeperGUI();
+				//ujAblak.setVisible(true);
 			}
 		});
 		contentPane.setLayout(null);

@@ -1,4 +1,4 @@
-package hu.ziyan.minesweeper;
+package hu.ziyan.minesweeper.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,8 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Tabla extends JFrame {
-	private static final long serialVersionUID = -4771689322191419156L;
+public class BoardJPanel extends JPanel {
+
+	private static final long serialVersionUID = -3378369239204225291L;
 
 	protected int ido = 0;
 	protected int maradekSegitseg = 3;
@@ -30,16 +31,19 @@ public class Tabla extends JFrame {
 	protected boolean elsoLepes = true;
 	protected boolean aknaraLepes = false;
 	protected boolean uresMezo = false;
-	protected JLabel idomero = new JLabel("Idő: 0");
+	protected JLabel idomero = new JLabel(Labels.time_label + ": 0");
 	protected JButton mezoGombok[][];
-	protected JLabel segitsegSzamlalo = new JLabel("Maradék segítség: 3");
+	protected JLabel segitsegSzamlalo = new JLabel(Labels.remaining_help_label + ": 3");
 
-	public Tabla(final int sorokSzama, final int oszlopokSzama, final int aknakSzama, final String nehezsegiSzint) {
-		setLocation(100, 150);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-		setTitle("Aknakereső");
+	MinesweeperGUI gui;
 
+	public BoardJPanel(MinesweeperGUI gui, final int sorokSzama, final int oszlopokSzama, final int aknakSzama, final String nehezsegiSzint) {
+		super();
+		this.gui = gui;
+		createBoard(sorokSzama, oszlopokSzama, aknakSzama, nehezsegiSzint);
+	}
+
+	private void createBoard(final int sorokSzama, final int oszlopokSzama, final int aknakSzama, final String nehezsegiSzint) {
 		JPanel foAblak = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -47,7 +51,7 @@ public class Tabla extends JFrame {
 		maradekMezo = (sorokSzama * oszlopokSzama) - aknakSzama;
 
 		/*
-		 * feltöltés gombokkal és eseménykezelők beállítása
+		 * make buttons and set event listeners for them
 		 */
 		mezoGombok = new JButton[sorokSzama][oszlopokSzama];
 		for (int i = 0; i < sorokSzama; i++) {
@@ -73,7 +77,7 @@ public class Tabla extends JFrame {
 								mezo = mezoLetrehozasa(sorokSzama, oszlopokSzama, aknakSzama);
 							}
 							mezoFelfedese(aktualisSor, aktualisOszlop);
-							idomero.requestFocus(); // gomb kijelölésének elkerülése
+							idomero.requestFocus(); // workaround to avoid selection of button
 
 							aknaraLepes = false;
 							uresMezo = false;
@@ -84,10 +88,10 @@ public class Tabla extends JFrame {
 							}
 
 							if (!aknaraLepes) {
-								if (elsoLepes) { // időmérő elindítása
+								if (elsoLepes) { // start timer
 									ActionListener listener = new ActionListener() {
 										public void actionPerformed(ActionEvent event) {
-											idomero.setText("Idő: " + Integer.toString(++ido));
+											idomero.setText(Labels.time_label + Integer.toString(++ido));
 										}
 									};
 									szamlalo = new Timer(1000, listener);
@@ -136,9 +140,8 @@ public class Tabla extends JFrame {
 		foAblak.add(idomero, c);
 
 		add(foAblak, BorderLayout.CENTER);
-		foAblak.setVisible(true);
-		pack();
 	}
+	
 
 	private char[][] mezoLetrehozasa(int sorokSzama, int oszlopokSzama, int aknakSzama) {
 		char[][] mezo = new char[sorokSzama][oszlopokSzama];
@@ -213,7 +216,7 @@ public class Tabla extends JFrame {
 
 	private void segitsegKerese(int sor, int oszlop, int sorokSzama, int oszlopokSzama, String nehezsegiSzint) {
 		if (maradekSegitseg > 0) {
-			if (elsoLepes) { // időmérő elindítása
+			if (elsoLepes) { // start timer
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
 						idomero.setText("Idő: " + Integer.toString(++ido));
@@ -418,13 +421,13 @@ public class Tabla extends JFrame {
 	}
 
 	private void felugroLehetosegek() {
-		Object[] gombok = { "Új játék", "Kilépés" };
-		int valasztas = JOptionPane.showOptionDialog(rootPane, "Vesztettél! Mit kívánsz tenni?", "Aknakereső", JOptionPane.YES_NO_OPTION,
+		Object[] gombok = { "Új játék", Labels.exit_label };
+		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?", "Aknakereső", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, gombok, gombok[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
 			setVisible(false);
-			JFrame ujAblak = new NehezsegValasztas();
-			ujAblak.setVisible(true);
+			//JFrame ujAblak = new MinesweeperGUI();
+			//ujAblak.setVisible(true);
 		} else if (valasztas == JOptionPane.NO_OPTION) {
 			System.exit(0);
 		}
@@ -452,4 +455,5 @@ public class Tabla extends JFrame {
 			}
 		}
 	}
+
 }

@@ -1,22 +1,23 @@
-package hu.ziyan.minesweeper;
+package hu.ziyan.minesweeper.view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.text.NumberFormat;
+import javax.swing.border.TitledBorder;
 
-public class NehezsegValasztas extends JFrame {
-	private static final long serialVersionUID = -8048440943970987333L;
+public class ChooseDifficultyJPanel extends JPanel {
+	private static final long serialVersionUID = 3842457598140735608L;
+	
 	private JRadioButton rdbtnKezdo;
 	private JRadioButton rdbtnKozepes;
 	private JRadioButton rdbtnNehez;
@@ -27,27 +28,31 @@ public class NehezsegValasztas extends JFrame {
 	private JTextField textFieldMagassag;
 	private JTextField textFieldSzelesseg;
 	private JTextField textFieldAknak;
-	private JButton btnInditas = new JButton("Játék indítása");
-	private JButton btnKilepes = new JButton("Kilépés");
-
-	public NehezsegValasztas() {
-		setTitle("Aknakeres\u0151");
-		setResizable(false);
-		setBounds(100, 100, 276, 306);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
+	private JButton btnInditas = new JButton(Labels.start_game_label);
+	private JButton btnKilepes = new JButton(Labels.exit_label);
+	
+	MinesweeperGUI gui;
+	
+	public ChooseDifficultyJPanel(MinesweeperGUI gui) {
+		super();
+		this.gui = gui;
+		fill();
+	}
+	
+	private void fill() {
+		this.setLayout(null);
 
 		JLabel lblUdvozles = new JLabel(
 				"<html>\u00DCdv\u00F6z\u00F6llek az aknakeres\u0151ben!<br>K\u00E9rlek v\u00E1lassz egy neh\u00E9zs\u00E9gi szintet.</html>");
 		lblUdvozles.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUdvozles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblUdvozles.setBounds(10, 1, 250, 41);
-		getContentPane().add(lblUdvozles);
+		this.add(lblUdvozles);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Neh\u00E9zs\u00E9gi szint", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 42, 250, 191);
-		getContentPane().add(panel);
+		this.add(panel);
 		panel.setLayout(null);
 
 		rdbtnKezdo = new JRadioButton("<html>Kezdő<br>10 akna<br>9x9-es rács</html>");
@@ -142,21 +147,11 @@ public class NehezsegValasztas extends JFrame {
 		btnInditas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnKezdo.isSelected()) {
-					JFrame tabla = new Tabla(9, 9, 10, "Kezdő");
-					tabla.setVisible(true);
-					setVisible(false);
-					/*
-					 JFrame eredmenyek = new Eredmenyek("Kezdő", 155);
-					 eredmenyek.setVisible(true);
-					 */
+					gui.showBoardPanel(9, 9, 10, "Kezd�");
 				} else if (rdbtnKozepes.isSelected()) {
-					JFrame tabla = new Tabla(16, 16, 40, "Közepes");
-					setVisible(false);
-					tabla.setVisible(true);
+					gui.showBoardPanel(16, 16, 40, "K�zepes");
 				} else if (rdbtnNehez.isSelected()) {
-					JFrame tabla = new Tabla(16, 30, 99, "Nehéz");
-					setVisible(false);
-					tabla.setVisible(true);
+					gui.showBoardPanel(16, 30, 99, "Neh�z");
 				} else {
 					if (!textFieldMagassag.getText().equals("")
 							&& !textFieldSzelesseg.getText().equals("")
@@ -167,16 +162,14 @@ public class NehezsegValasztas extends JFrame {
 							&& Integer.parseInt(textFieldSzelesseg.getText()) < 71
 							&& Integer.parseInt(textFieldAknak.getText()) < (Integer.parseInt(textFieldSzelesseg.getText()) * Integer
 									.parseInt(textFieldMagassag.getText()))) {
-						JFrame tabla = new Tabla(Integer.parseInt(textFieldMagassag.getText()), Integer.parseInt(textFieldSzelesseg.getText()),
+						gui.showBoardPanel(Integer.parseInt(textFieldMagassag.getText()), Integer.parseInt(textFieldSzelesseg.getText()),
 								Integer.parseInt(textFieldAknak.getText()), "Egyedi");
-						setVisible(false);
-						tabla.setVisible(true);
 					}
 				}
 			}
 		});
 		btnInditas.setBounds(161, 244, 99, 23);
-		getContentPane().add(btnInditas);
+		this.add(btnInditas);
 
 		btnKilepes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -184,6 +177,6 @@ public class NehezsegValasztas extends JFrame {
 			}
 		});
 		btnKilepes.setBounds(10, 244, 89, 23);
-		getContentPane().add(btnKilepes);
+		this.add(btnKilepes);
 	}
 }
