@@ -1,0 +1,11 @@
+This was my homework when I learned Java, so it's not too well-coded, I'm going to enhance it over time.
+
+It has ant build file, valid commands are:
+ant clean
+ant compile
+ant jar
+ant run
+ant clean-build
+ant main
+
+Use ant clean-build to create an executable jar file.
