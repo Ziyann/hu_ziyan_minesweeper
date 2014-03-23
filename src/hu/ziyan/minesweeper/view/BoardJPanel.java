@@ -77,7 +77,7 @@ public class BoardJPanel extends JPanel {
 								mezo = mezoLetrehozasa(sorokSzama, oszlopokSzama, aknakSzama);
 							}
 							mezoFelfedese(aktualisSor, aktualisOszlop);
-							idomero.requestFocus(); // workaround to avoid selection of button
+							//idomero.requestFocus(); // workaround to avoid selection of button
 
 							aknaraLepes = false;
 							uresMezo = false;
@@ -91,7 +91,7 @@ public class BoardJPanel extends JPanel {
 								if (elsoLepes) { // start timer
 									ActionListener listener = new ActionListener() {
 										public void actionPerformed(ActionEvent event) {
-											idomero.setText(Labels.time_label + Integer.toString(++ido));
+											idomero.setText(Labels.time_label + ": " + Integer.toString(++ido));
 										}
 									};
 									szamlalo = new Timer(1000, listener);
@@ -115,15 +115,14 @@ public class BoardJPanel extends JPanel {
 								felugroLehetosegek();
 							}
 						}
-						// System.out.println("Maradék mező: " + maradekMezo);
 					}
-				});
+				}); // addmouselistener end
 
 				c.gridx = j;
 				c.gridy = i;
 				foAblak.add(mezoGombok[i][j], c);
 			}
-		} // ciklus vége
+		} // for loop end
 
 		c.insets = new Insets(0, 0, 0, 2);
 		c.gridx = oszlopokSzama - 6;

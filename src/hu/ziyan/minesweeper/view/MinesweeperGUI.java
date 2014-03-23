@@ -23,20 +23,25 @@ public class MinesweeperGUI {
 		String title = Labels.gui_title;
 
 		window = new JFrame(title);
-		//window.setResizable(false);
-		//window.setBounds(100, 100, 276, 306);
+		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		showDifficultyPanel();
+		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
+		window.setJMenuBar(mMenuBar);
+
+		//showDifficultyPanel();
+		showBoardPanel(9, 9, 10, "Kezdõ");
 	}
 
 	public void showDifficultyPanel() {
 		ChooseDifficultyJPanel choosediff = new ChooseDifficultyJPanel(this);
 		setActualContent(choosediff);
 	}
-	
-	public void showBoardPanel(int sorokSzama, int oszlopokSzama, int aknakSzama, String nehezsegiSzint) {
-		BoardJPanel board = new BoardJPanel(this, sorokSzama, oszlopokSzama, aknakSzama, nehezsegiSzint);
+
+	public void showBoardPanel(int sorokSzama, int oszlopokSzama,
+			int aknakSzama, String nehezsegiSzint) {
+		BoardJPanel board = new BoardJPanel(this, sorokSzama, oszlopokSzama,
+				aknakSzama, nehezsegiSzint);
 		setActualContent(board);
 	}
 
