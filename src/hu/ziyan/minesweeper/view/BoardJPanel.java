@@ -226,7 +226,7 @@ public class BoardJPanel extends JPanel {
 				elsoLepes = false;
 			}
 			ido += 30;
-			segitsegSzamlalo.setText("Maradék segítség: " + --maradekSegitseg);
+			segitsegSzamlalo.setText(Labels.remaining_help_label + ": " + --maradekSegitseg);
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
 					if (sor + i < sorokSzama && sor + i >= 0 && oszlop + j < oszlopokSzama && oszlop + j >= 0) {
