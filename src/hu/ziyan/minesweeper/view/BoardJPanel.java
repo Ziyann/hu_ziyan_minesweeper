@@ -2,7 +2,6 @@ package hu.ziyan.minesweeper.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,18 +30,20 @@ public class BoardJPanel extends JPanel {
 	protected boolean aknaraLepes = false;
 	protected boolean uresMezo = false;
 	protected JLabel idomero = new JLabel(Labels.time_label + ": 0");
-	protected JButton mezoGombok[][];
+	protected JButtonField fieldButtons[][];
 	protected JLabel segitsegSzamlalo = new JLabel(Labels.remaining_help_label + ": 3");
 
 	MinesweeperGUI gui;
 
-	public BoardJPanel(MinesweeperGUI gui, final int sorokSzama, final int oszlopokSzama, final int aknakSzama, final String nehezsegiSzint) {
+	public BoardJPanel(MinesweeperGUI gui, final int sorokSzama, final int oszlopokSzama, final int aknakSzama,
+			final String nehezsegiSzint) {
 		super();
 		this.gui = gui;
 		createBoard(sorokSzama, oszlopokSzama, aknakSzama, nehezsegiSzint);
 	}
 
-	private void createBoard(final int sorokSzama, final int oszlopokSzama, final int aknakSzama, final String nehezsegiSzint) {
+	private void createBoard(final int sorokSzama, final int oszlopokSzama, final int aknakSzama,
+			final String nehezsegiSzint) {
 		JPanel foAblak = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -53,31 +53,29 @@ public class BoardJPanel extends JPanel {
 		/*
 		 * make buttons and set event listeners for them
 		 */
-		mezoGombok = new JButton[sorokSzama][oszlopokSzama];
+		fieldButtons = new JButtonField[sorokSzama][oszlopokSzama];
 		for (int i = 0; i < sorokSzama; i++) {
 			for (int j = 0; j < oszlopokSzama; j++) {
-				mezoGombok[i][j] = new JButton("");
-				mezoGombok[i][j].setPreferredSize(new Dimension(25, 25));
-				mezoGombok[i][j].setMargin(new Insets(1, 1, 1, 1));
-				mezoGombok[i][j].setFont(mezoGombok[i][j].getFont().deriveFont(20.0f));
+				fieldButtons[i][j] = new JButtonField();
 
 				final int aktualisSor = i;
 				final int aktualisOszlop = j;
 
-				mezoGombok[i][j].addMouseListener(new MouseAdapter() {
+				fieldButtons[i][j].addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent kattintas) {
 						if (kattintas.isShiftDown()) {
 							segitsegKerese(aktualisSor, aktualisOszlop, sorokSzama, oszlopokSzama, nehezsegiSzint);
-						} else if (kattintas.isMetaDown() && mezoGombok[aktualisSor][aktualisOszlop].isEnabled()) {
-							zaszloElhelyezese(aktualisSor, aktualisOszlop);
-						} else if (mezoGombok[aktualisSor][aktualisOszlop].getText().equals("P")) {
-							zaszloTorlese(aktualisSor, aktualisOszlop);
-						} else if (mezoGombok[aktualisSor][aktualisOszlop].isEnabled()) {
+						} else if (kattintas.isMetaDown() && fieldButtons[aktualisSor][aktualisOszlop].isEnabled()) {
+							fieldButtons[aktualisSor][aktualisOszlop].placeFlag();
+						} else if (fieldButtons[aktualisSor][aktualisOszlop].getText().equals("P")) {
+							fieldButtons[aktualisSor][aktualisOszlop].removeFlag();
+						} else if (fieldButtons[aktualisSor][aktualisOszlop].isEnabled()) {
 							while (Character.toString(mezo[aktualisSor][aktualisOszlop]).equals("x") && elsoLepes) {
 								mezo = mezoLetrehozasa(sorokSzama, oszlopokSzama, aknakSzama);
 							}
 							mezoFelfedese(aktualisSor, aktualisOszlop);
-							//idomero.requestFocus(); // workaround to avoid selection of button
+							// idomero.requestFocus(); // workaround to avoid
+							// selection of button
 
 							aknaraLepes = false;
 							uresMezo = false;
@@ -120,7 +118,7 @@ public class BoardJPanel extends JPanel {
 
 				c.gridx = j;
 				c.gridy = i;
-				foAblak.add(mezoGombok[i][j], c);
+				foAblak.add(fieldButtons[i][j], c);
 			}
 		} // for loop end
 
@@ -140,7 +138,6 @@ public class BoardJPanel extends JPanel {
 
 		add(foAblak, BorderLayout.CENTER);
 	}
-	
 
 	private char[][] mezoLetrehozasa(int sorokSzama, int oszlopokSzama, int aknakSzama) {
 		char[][] mezo = new char[sorokSzama][oszlopokSzama];
@@ -167,7 +164,8 @@ public class BoardJPanel extends JPanel {
 
 		for (int sor = 0; sor < sorokSzama; sor++) {
 			for (int oszlop = 0; oszlop < oszlopokSzama; oszlop++) {
-				if (mezo[sor][oszlop] == 'x') { // ha akna, tovább lép a ciklus
+				if (mezo[sor][oszlop] == 'x') { // ha akna, tovább lép a
+												// ciklus
 					continue;
 				}
 				byte kornyezoAknakSzama = 0;
@@ -202,14 +200,6 @@ public class BoardJPanel extends JPanel {
 				}
 			}
 		}
-
-		/*for (int sor = 0; sor < sorokSzama; sor++) {
-			for (int oszlop = 0; oszlop < oszlopokSzama; oszlop++) {
-				System.out.print(mezo[sor][oszlop]);
-			}
-			System.out.println();
-		}*/
-
 		return mezo;
 	}
 
@@ -218,7 +208,7 @@ public class BoardJPanel extends JPanel {
 			if (elsoLepes) { // start timer
 				ActionListener listener = new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
-						idomero.setText("Idő: " + Integer.toString(++ido));
+						idomero.setText(Labels.time_label + ": " + Integer.toString(++ido));
 					}
 				};
 				szamlalo = new Timer(1000, listener);
@@ -231,7 +221,7 @@ public class BoardJPanel extends JPanel {
 				for (int j = -1; j < 2; j++) {
 					if (sor + i < sorokSzama && sor + i >= 0 && oszlop + j < oszlopokSzama && oszlop + j >= 0) {
 						if (Character.toString(mezo[sor + i][oszlop + j]).equals("x")) {
-							zaszloElhelyezese(sor + i, oszlop + j);
+							fieldButtons[sor + i][oszlop + j].placeFlag();
 						} else {
 							mezoFelfedese(sor + i, oszlop + j);
 						}
@@ -250,30 +240,31 @@ public class BoardJPanel extends JPanel {
 	private void aknakFelfedese(final int sorokSzama, final int oszlopokSzama) {
 		for (int i = 0; i < sorokSzama; i++) {
 			for (int j = 0; j < oszlopokSzama; j++) {
-				if (mezoGombok[i][j].getText().equals("P") && Character.toString(mezo[i][j]).equals("x")) {
-					// zaszloTorlese(i, j);
-					mezoGombok[i][j].setForeground(Color.RED);
-					mezoGombok[i][j].setEnabled(false);
+				if (fieldButtons[i][j].getText().equals("P") && Character.toString(mezo[i][j]).equals("x")) {
+					fieldButtons[i][j].setForeground(Color.RED);
+					fieldButtons[i][j].setEnabled(false);
 				} else if (Character.toString(mezo[i][j]).equals("x")) {
-					mezoGombok[i][j].setText("X");
-					mezoGombok[i][j].setForeground(Color.RED);
-					mezoGombok[i][j].setEnabled(false);
+					fieldButtons[i][j].setText("X");
+					fieldButtons[i][j].setForeground(Color.RED);
+					fieldButtons[i][j].setEnabled(false);
 
 				}
 			}
 		}
 	}
 
-	private void uresMezokFelfedese(final int sorokSzama, final int oszlopokSzama, final int aktualisSor, final int aktualisOszlop) {
+	private void uresMezokFelfedese(final int sorokSzama, final int oszlopokSzama, final int aktualisSor,
+			final int aktualisOszlop) {
 		int tempOszlop = aktualisOszlop;
 		int tempSor = aktualisSor;
 		/*
 		 * lefelé indul
 		 */
 		while (++tempSor < sorokSzama && Character.toString(mezo[tempSor][aktualisOszlop]).equals(" ")
-				&& mezoGombok[tempSor][aktualisOszlop].isEnabled()) {
+				&& fieldButtons[tempSor][aktualisOszlop].isEnabled()) {
 			/*
-			 * felfedi az aktuális sort (++sor amég üres) addig megy lefelé, amég üres a mező
+			 * felfedi az aktuális sort (++sor amég üres) addig megy lefelé,
+			 * amég üres a mező
 			 */
 			mezoFelfedese(tempSor, aktualisOszlop);
 			/*
@@ -281,7 +272,7 @@ public class BoardJPanel extends JPanel {
 			 */
 			while (true) {
 				while (++tempOszlop < oszlopokSzama && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
-						&& mezoGombok[tempSor][tempOszlop].isEnabled()) {
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) {
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -295,7 +286,8 @@ public class BoardJPanel extends JPanel {
 			 * majd balra
 			 */
 			while (true) {
-				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ") && mezoGombok[tempSor][tempOszlop].isEnabled()) { // balra
+				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) { // balra
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -307,7 +299,8 @@ public class BoardJPanel extends JPanel {
 			}
 		}
 		/*
-		 * tempSor az utolsó üres sor utáni sor pozícióján áll az oszlop pedig az eredeti
+		 * tempSor az utolsó üres sor utáni sor pozícióján áll az oszlop
+		 * pedig az eredeti
 		 */
 		if (tempSor < sorokSzama) {
 			mezoFelfedese(tempSor, aktualisOszlop);
@@ -317,11 +310,12 @@ public class BoardJPanel extends JPanel {
 		/*
 		 * felfelé indul
 		 */
-		while (--tempSor >= 0 && Character.toString(mezo[tempSor][aktualisOszlop]).equals(" ") && mezoGombok[tempSor][aktualisOszlop].isEnabled()) {
+		while (--tempSor >= 0 && Character.toString(mezo[tempSor][aktualisOszlop]).equals(" ")
+				&& fieldButtons[tempSor][aktualisOszlop].isEnabled()) {
 			mezoFelfedese(tempSor, aktualisOszlop);
 			while (true) {
 				while (++tempOszlop < oszlopokSzama && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
-						&& mezoGombok[tempSor][tempOszlop].isEnabled()) { // jobbra
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) { // jobbra
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -332,7 +326,8 @@ public class BoardJPanel extends JPanel {
 				break;
 			}
 			while (true) {
-				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ") && mezoGombok[tempSor][tempOszlop].isEnabled()) { // balra
+				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) { // balra
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -352,11 +347,11 @@ public class BoardJPanel extends JPanel {
 		 * jobbra indul
 		 */
 		while (++tempOszlop < oszlopokSzama && Character.toString(mezo[aktualisSor][tempOszlop]).equals(" ")
-				&& mezoGombok[aktualisSor][tempOszlop].isEnabled()) {
+				&& fieldButtons[aktualisSor][tempOszlop].isEnabled()) {
 			mezoFelfedese(aktualisSor, tempOszlop);
 			while (true) {
 				while (++tempOszlop < oszlopokSzama && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
-						&& mezoGombok[tempSor][tempOszlop].isEnabled()) {
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) {
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -367,7 +362,8 @@ public class BoardJPanel extends JPanel {
 				break;
 			}
 			while (true) {
-				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ") && mezoGombok[tempSor][tempOszlop].isEnabled()) {
+				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) {
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -386,11 +382,12 @@ public class BoardJPanel extends JPanel {
 		/*
 		 * balra indul
 		 */
-		while (--tempOszlop >= 0 && Character.toString(mezo[aktualisSor][tempOszlop]).equals(" ") && mezoGombok[aktualisSor][tempOszlop].isEnabled()) {
+		while (--tempOszlop >= 0 && Character.toString(mezo[aktualisSor][tempOszlop]).equals(" ")
+				&& fieldButtons[aktualisSor][tempOszlop].isEnabled()) {
 			mezoFelfedese(aktualisSor, tempOszlop);
 			while (true) {
 				while (++tempOszlop < oszlopokSzama && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
-						&& mezoGombok[tempSor][tempOszlop].isEnabled()) {
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) {
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -401,7 +398,8 @@ public class BoardJPanel extends JPanel {
 				break;
 			}
 			while (true) {
-				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ") && mezoGombok[tempSor][tempOszlop].isEnabled()) {
+				while (--tempOszlop >= 0 && Character.toString(mezo[tempSor][tempOszlop]).equals(" ")
+						&& fieldButtons[tempSor][tempOszlop].isEnabled()) {
 					mezoFelfedese(tempSor, tempOszlop);
 					uresMezokFelfedese(sorokSzama, oszlopokSzama, tempSor, tempOszlop);
 				}
@@ -420,38 +418,22 @@ public class BoardJPanel extends JPanel {
 	}
 
 	private void felugroLehetosegek() {
-		Object[] gombok = { "Új játék", Labels.exit_label };
-		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?", "Aknakereső", JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, gombok, gombok[0]);
+		Object[] gombok = { Labels.new_game, Labels.exit_label };
+		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
+				Labels.gui_title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, gombok, gombok[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
 			setVisible(false);
-			//JFrame ujAblak = new MinesweeperGUI();
-			//ujAblak.setVisible(true);
+			gui.showBoardPanel(9, 9, 10, Labels.beginner); // TODO fix
 		} else if (valasztas == JOptionPane.NO_OPTION) {
 			System.exit(0);
 		}
 	}
 
-	private void zaszloElhelyezese(final int aktualisSor, final int aktualisOszlop) {
-		mezoGombok[aktualisSor][aktualisOszlop].setText("P");
-	}
-
-	private void zaszloTorlese(final int aktualisSor, final int aktualisOszlop) {
-		mezoGombok[aktualisSor][aktualisOszlop].setText(" ");
-	}
-
 	private void mezoFelfedese(final int aktualisSor, final int aktualisOszlop) {
-		if (mezoGombok[aktualisSor][aktualisOszlop].isEnabled()) {
+		if (fieldButtons[aktualisSor][aktualisOszlop].isEnabled()) {
 			maradekMezo--;
-			mezoGombok[aktualisSor][aktualisOszlop].setText(Character.toString(mezo[aktualisSor][aktualisOszlop]));
-			mezoGombok[aktualisSor][aktualisOszlop].setEnabled(false);
-			if (mezoGombok[aktualisSor][aktualisOszlop].getText().equals("1")) {
-				mezoGombok[aktualisSor][aktualisOszlop].setForeground(Color.BLUE);
-			} else if (mezoGombok[aktualisSor][aktualisOszlop].getText().equals("2")) {
-				mezoGombok[aktualisSor][aktualisOszlop].setForeground(Color.ORANGE);
-			} else {
-				mezoGombok[aktualisSor][aktualisOszlop].setForeground(Color.RED);
-			}
+			fieldButtons[aktualisSor][aktualisOszlop].reveal(Character
+					.getNumericValue((mezo[aktualisSor][aktualisOszlop])));
 		}
 	}
 

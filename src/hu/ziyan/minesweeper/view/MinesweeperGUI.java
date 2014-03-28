@@ -29,13 +29,7 @@ public class MinesweeperGUI {
 		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
 		window.setJMenuBar(mMenuBar);
 
-		//showDifficultyPanel();
 		showBoardPanel(9, 9, 10, "Kezdõ");
-	}
-
-	public void showDifficultyPanel() {
-		ChooseDifficultyJPanel choosediff = new ChooseDifficultyJPanel(this);
-		setActualContent(choosediff);
 	}
 
 	public void showBoardPanel(int sorokSzama, int oszlopokSzama,
