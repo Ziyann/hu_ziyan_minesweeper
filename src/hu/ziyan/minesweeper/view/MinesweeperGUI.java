@@ -1,6 +1,7 @@
 package hu.ziyan.minesweeper.view;
 
 import hu.ziyan.minesweeper.controller.MinesweeperController;
+import hu.ziyan.minesweeper.model.Minefield;
 
 import java.awt.Container;
 
@@ -10,6 +11,7 @@ public class MinesweeperGUI {
 
 	private JFrame window;
 	private MinesweeperController controller;
+	private BoardJPanel board;
 
 	public void startGUI() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -29,13 +31,20 @@ public class MinesweeperGUI {
 		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
 		window.setJMenuBar(mMenuBar);
 
-		showBoardPanel(9, 9, 10, "Kezdõ");
+		controller.newGame(Minefield.DIFFICULTY_BEGINNER);
+	}
+	
+
+	public int getRows() {
+		return controller.getMinefield().getRows();
+	}
+	
+	public int getColumns() {
+		return controller.getMinefield().getColumns();
 	}
 
-	public void showBoardPanel(int sorokSzama, int oszlopokSzama,
-			int aknakSzama, String nehezsegiSzint) {
-		BoardJPanel board = new BoardJPanel(this, sorokSzama, oszlopokSzama,
-				aknakSzama, nehezsegiSzint);
+	public void showBoardPanel() {
+		board = new BoardJPanel(this);
 		setActualContent(board);
 	}
 
@@ -55,5 +64,9 @@ public class MinesweeperGUI {
 
 	public MinesweeperGUI(MinesweeperController controller) {
 		this.controller = controller;
+	}
+	
+	public void increaseTimer() {
+		board.increaseTimer();
 	}
 }

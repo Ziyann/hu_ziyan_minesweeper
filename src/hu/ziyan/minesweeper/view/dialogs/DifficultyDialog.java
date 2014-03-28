@@ -1,5 +1,6 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
+import hu.ziyan.minesweeper.model.Minefield;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.MinesweeperGUI;
 
@@ -160,11 +161,11 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnOk) {
 			if (this.rdbtnBeginner.isSelected()) {
-				gui.showBoardPanel(9, 9, 10, Labels.beginner);
+				gui.getController().newGame(Minefield.DIFFICULTY_BEGINNER);
 			} else if (this.rdbtnIntermediate.isSelected()) {
-				gui.showBoardPanel(16, 16, 40, Labels.intermediate);
+				gui.getController().newGame(Minefield.DIFFICULTY_INTERMEDIATE);
 			} else if (this.rdbtnAdvanced.isSelected()) {
-				gui.showBoardPanel(16, 30, 99, Labels.advanced);
+				gui.getController().newGame(Minefield.DIFFICULTY_ADVANCED);
 			} else { // custom difficulty
 				int height = Integer.parseInt(textFieldHeight.getText());
 				int width = Integer.parseInt(textFieldWidth.getText());
@@ -184,7 +185,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 				} else if (mines < 10) {
 					mines = 10;
 				}
-				gui.showBoardPanel(height, width, mines, Labels.custom);
+				gui.getController().newGame(height, width, mines);
 			}
 			this.setVisible(false);
 		} else if (e.getSource() == this.btnCancel) {

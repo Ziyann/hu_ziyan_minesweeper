@@ -5,7 +5,6 @@ public final class Labels {
 	public static final String start_game_label = "Start game";
 	public static final String exit_label = "Exit";
 	public static final String time_label = "Time";
-	public static final String remaining_help_label = "Remaining help";
 	public static final String diff_beginner_label = "<html>Beginner<br>10 mines<br>9 x 9 tile grid</html>";
 	public static final String diff_intermediate_label = "<html>Intermediate<br>40 mines<br>16 x 16 tile grid</html>";
 	public static final String diff_advanced_label = "<html>Advanced<br>99 mines<br>16 x 30 tile grid</html>";

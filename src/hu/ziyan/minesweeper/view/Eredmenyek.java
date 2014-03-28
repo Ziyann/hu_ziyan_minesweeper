@@ -34,12 +34,14 @@ public class Eredmenyek extends JFrame {
 	private JLabel top8;
 	private JLabel top9;
 	private JLabel top010;
-	private JButton btnUjJatek = new JButton("Új játék");
-	private JButton btnKilepes = new JButton("Kilépés");
+	private JButton btnUjJatek = new JButton(Labels.new_game);
+	private JButton btnKilepes = new JButton(Labels.exit_label);
 	private BufferedReader be_file;
 	private FileWriter ujfajl;
 	private String[][] top10 = new String[10][2];
 	private String fajlnev;
+	private MinesweeperGUI gui;
+	private String difficulty;
 
 	private void fajlElintezese(String nehezsegiSzint, int ido) {
 		if (nehezsegiSzint.equals("Kezdő")) {
@@ -129,7 +131,9 @@ public class Eredmenyek extends JFrame {
 		});
 	}
 
-	public Eredmenyek(String nehezsegiSzint, int ido) {
+	public Eredmenyek(MinesweeperGUI gui, int ido) {
+		this.gui = gui;
+		//this.difficulty = gui.getController().getDifficulty(); TODO fix
 		setTitle("Aknakeres\u0151");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,80 +146,80 @@ public class Eredmenyek extends JFrame {
 		lblSzuksegesIdo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSzuksegesIdo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		lblTop10Nehezseg = new JLabel("Top 10 - " + nehezsegiSzint + ":");
+		lblTop10Nehezseg = new JLabel("Top 10 - " + difficulty + ":");
 		lblTop10Nehezseg.setBounds(15, 38, 419, 49);
 		lblTop10Nehezseg.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTop10Nehezseg.setHorizontalAlignment(SwingConstants.CENTER);
 
-		if (!nehezsegiSzint.equals("Egyedi")) {
-				fajlElintezese(nehezsegiSzint, ido);
+		if (!difficulty.equals("Egyedi")) {
+				fajlElintezese(difficulty, ido);
 		}
 
 		top1 = new JLabel("Egyéni módban nincsen toplista.");
-		if(!nehezsegiSzint.equals("Egyedi")) {
+		if(!difficulty.equals("Egyedi")) {
 			top6.setText("1. " + top10[0][1] + " - " + top10[0][0] + " mp");
 		}
 		top1.setBounds(56, 93, 190, 16);
 		top1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top6 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[5][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[5][0]) != 9999999) {
 			top6.setText("6. " + top10[5][1] + " - " + top10[5][0] + " mp");
 		}
 		top6.setBounds(247, 93, 170, 16);
 		top6.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top2 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[1][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[1][0]) != 9999999) {
 			top2.setText("2. " + top10[1][1] + " - " + top10[1][0] + " mp");
 		}
 		top2.setBounds(56, 120, 170, 16);
 		top2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top7 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[6][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[6][0]) != 9999999) {
 			top7.setText("7. " + top10[6][1] + " - " + top10[6][0] + " mp");
 		}
 		top7.setBounds(247, 120, 170, 16);
 		top7.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top3 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[2][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[2][0]) != 9999999) {
 			top3.setText("3. " + top10[2][1] + " - " + top10[2][0] + " mp");
 		}
 		top3.setBounds(56, 147, 170, 16);
 		top3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top8 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[7][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[7][0]) != 9999999) {
 			top8.setText("8. " + top10[7][1] + " - " + top10[7][0] + " mp");
 		}
 		top8.setBounds(246, 147, 170, 16);
 		top8.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top4 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[3][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[3][0]) != 9999999) {
 			top4.setText("4. " + top10[3][1] + " - " + top10[3][0] + " mp");
 		}
 		top4.setBounds(56, 174, 170, 16);
 		top4.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top9 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[8][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[8][0]) != 9999999) {
 			top9.setText("9. " + top10[8][1] + " - " + top10[8][0] + " mp");
 		}
 		top9.setBounds(246, 174, 170, 16);
 		top9.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top5 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[4][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[4][0]) != 9999999) {
 			top5.setText("5. " + top10[4][1] + " - " + top10[4][0] + " mp");
 		}
 		top5.setBounds(56, 201, 170, 16);
 		top5.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		top010 = new JLabel("");
-		if(!nehezsegiSzint.equals("Egyedi") && Integer.parseInt(top10[9][0]) != 9999999) {
+		if(!difficulty.equals("Egyedi") && Integer.parseInt(top10[9][0]) != 9999999) {
 			top010.setText("10. " + top10[9][1] + " - " + top10[9][0] + " mp");
 		}
 		top010.setBounds(246, 201, 170, 16);
