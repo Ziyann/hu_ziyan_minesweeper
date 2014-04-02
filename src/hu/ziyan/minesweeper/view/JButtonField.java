@@ -24,7 +24,7 @@ public class JButtonField extends JButton implements MouseListener {
 		this.setMargin(new Insets(1, 1, 1, 1));
 		this.setFont(this.getFont().deriveFont(20.0f));
 		this.addMouseListener(this);
-		
+
 		this.controller = controller;
 		this.row = row;
 		this.column = column;
@@ -45,30 +45,33 @@ public class JButtonField extends JButton implements MouseListener {
 		this.nearbyMines = nearbyMines;
 	}
 
-	public void placeFlag() {
-		this.setText("P");
-		this.isFlagged = true;
-	}
-
-	public void removeFlag() {
-		this.setText("");
-		this.isFlagged = false;
-	}
-
 	public boolean isFlagged() {
 		return this.isFlagged;
 	}
 
-	public void showFlaggedMine() {
-		this.setEnabled(false);
-		this.setText("<html><font color=red>P</font></html>");
+	public boolean isEmpty() {
+		if (this.nearbyMines == 0 && this.isEnabled() && !this.isMine) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
+	public void showFlaggedMine() {
+		this.setContentAreaFilled(false);
+		this.removeMouseListener(this);
+		this.setFocusable(false);
+		this.setText("<html><font color=red>P</font></html>");
+	}
+	
 	public void reveal() {
 		this.setContentAreaFilled(false);
 		this.removeMouseListener(this);
 		this.setFocusable(false);
-		if (nearbyMines == 1) {
+		if (this.isEmpty()) {
+			this.setEnabled(false);
+			controller.revealNearbyEmptyFields(this.row, this.column);
+		} else if (nearbyMines == 1) {
 			this.setText("<html><font color=blue>1</font></html>");
 		} else if (nearbyMines == 2) {
 			this.setText("<html><font color=orange>2</font></html>");
@@ -76,46 +79,44 @@ public class JButtonField extends JButton implements MouseListener {
 			this.setText("<html><font color=red>" + nearbyMines + "</font></html>");
 		} else if (isMine) {
 			this.setText("<html><font color=red>X</font></html>");
+			controller.loseGame();
 		}
+	}
+	
+	private void placeFlag() {
+		this.setText("P");
+		this.isFlagged = true;
+	}
+
+	private void removeFlag() {
+		this.setText("");
+		this.isFlagged = false;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.isShiftDown()) {
-			//segitsegKerese(aktualisSor, aktualisOszlop, sorokSzama, oszlopokSzama); // TODO implement
-		} else if (e.isMetaDown() && this.isEnabled()) {
+		if (e.isMetaDown() && this.isEnabled()) {
 			this.placeFlag();
 		} else if (this.isFlagged) {
 			this.removeFlag();
 		} else if (this.isEnabled()) {
-			//while (Character.toString(mezo[aktualisSor][aktualisOszlop]).equals("x") && elsoLepes) {
-			//	mezo = mezoLetrehozasa(sorokSzama, oszlopokSzama, aknakSzama);
-			//} TODO implement
 			controller.revealField(row, column);
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

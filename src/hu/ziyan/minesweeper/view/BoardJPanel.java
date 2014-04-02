@@ -13,20 +13,20 @@ public class BoardJPanel extends JPanel {
 	private static final long serialVersionUID = -3378369239204225291L;
 
 	private int time;
-	private JLabel idomero;
+	private JLabel timerJLabel;
 	private MinesweeperGUI gui;
 
 	public BoardJPanel(MinesweeperGUI gui) {
 		super();
 		this.gui = gui;
 		this.time = 0;
-		idomero = new JLabel(Labels.time_label + ": 0");
-		idomero.setFont(idomero.getFont().deriveFont(15.0f));
+		timerJLabel = new JLabel(Labels.time_label + ": 0");
+		timerJLabel.setFont(timerJLabel.getFont().deriveFont(15.0f));
 		createBoard();
 	}
-	
+
 	public void increaseTimer() {
-		idomero.setText(Labels.time_label + ": " + ++time);
+		timerJLabel.setText(Labels.time_label + ": " + ++time);
 	}
 
 	private void createBoard() {
@@ -49,7 +49,7 @@ public class BoardJPanel extends JPanel {
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = gui.getController().getMinefield().getColumns() - 3;
 		c.gridwidth = 4;
-		foAblak.add(idomero, c);
+		foAblak.add(timerJLabel, c);
 
 		add(foAblak, BorderLayout.CENTER);
 	}

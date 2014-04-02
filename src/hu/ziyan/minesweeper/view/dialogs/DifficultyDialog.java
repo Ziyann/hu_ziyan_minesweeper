@@ -194,7 +194,8 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 			this.textFieldHeight.setEnabled(true);
 			this.textFieldWidth.setEnabled(true);
 			this.textFieldMines.setEnabled(true);
-		} else if (e.getSource() == this.rdbtnBeginner || e.getSource() == this.rdbtnAdvanced || e.getSource() == this.rdbtnIntermediate) {
+		} else if (e.getSource() == this.rdbtnBeginner || e.getSource() == this.rdbtnAdvanced
+				|| e.getSource() == this.rdbtnIntermediate) {
 			this.textFieldHeight.setEnabled(false);
 			this.textFieldWidth.setEnabled(false);
 			this.textFieldMines.setEnabled(false);

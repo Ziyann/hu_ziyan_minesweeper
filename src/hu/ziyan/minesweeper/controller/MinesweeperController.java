@@ -16,11 +16,12 @@ public class MinesweeperController {
 	private MinefieldService service;
 	private MinesweeperGUI gui;
 	private Timer timer;
+	private boolean isRevealingRunning = false;
 
 	/**
 	 * true if at least one field has been revealed
 	 */
-	private boolean gameStarted;
+	private boolean gameRunning = false;
 
 	/**
 	 * Starts the desktop GUI
@@ -28,13 +29,6 @@ public class MinesweeperController {
 	public void startDesktop() {
 		gui = new MinesweeperGUI(this);
 		gui.startGUI();
-	}
-
-	/**
-	 * @return current difficulty
-	 */
-	public int getDifficulty() {
-		return minefield.getDifficulty();
 	}
 
 	public Minefield getMinefield() {
@@ -45,6 +39,7 @@ public class MinesweeperController {
 		this.minefield = new Minefield(fieldDifficulty);
 		service = new MinefieldService(this, this.minefield);
 		service.makeField();
+		stopTimer();
 		gui.showBoardPanel();
 	}
 
@@ -52,57 +47,65 @@ public class MinesweeperController {
 		this.minefield = new Minefield(rows, columns, mines);
 		service = new MinefieldService(this, this.minefield);
 		service.makeField();
+		stopTimer();
 		gui.showBoardPanel();
 	}
 
-	public boolean isGameStarted() {
-		return gameStarted;
-	}
-
-	public void startGame() {
-		this.gameStarted = true;
-		startTimer();
+	public void newGame() {
+		service.makeField();
+		stopTimer();
+		gui.showBoardPanel();
 	}
 
 	public void revealField(int row, int column) {
-		if (!isGameStarted()) {
+		if (!gameRunning) {
 			while (minefield.getButtonField(row, column).isMine()) {
-				if (minefield.getDifficulty() != Minefield.DIFFICULTY_CUSTOM) {
-					newGame(minefield.getDifficulty());
-				} else {
-					newGame(minefield.getColumns(), minefield.getRows(), minefield.getMines());
-				}
+				newGame();
 			}
 			startGame();
 		}
 		service.revealField(row, column);
+		if (minefield.getRemainingFields() == 0 && this.gameRunning) {
+			this.gameRunning = false;
+			winGame();
+		}
+	}
+
+	public void revealNearbyEmptyFields(int row, int column) {
+		if (!isRevealingRunning) {
+			isRevealingRunning = true;
+			service.revealNearbyEmptyFields(row, column);
+			isRevealingRunning = false;
+		}
 	}
 
 	/**
-	 * Stops timer
+	 * Stops timer and displays a dialog (new game or exit)
 	 */
 	public void loseGame() {
-		timer.stop();
+		stopTimer();
 		service.revealMinefield();
 		Object[] options = { Labels.new_game, Labels.exit_label };
 		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
 				Labels.gui_title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
-			if (minefield.getDifficulty() != Minefield.DIFFICULTY_CUSTOM) {
-				newGame(minefield.getDifficulty());
-			} else {
-				newGame(minefield.getColumns(), minefield.getRows(), minefield.getMines());
-			}
+			newGame();
 		} else {
 			System.exit(0);
 		}
+	}
+	
+	private void startGame() {
+		this.gameRunning = true;
+		startTimer();
 	}
 
 	/**
 	 * Stops timer TODO show top ten
 	 */
-	public void winGame() {
-		timer.stop();
+	private void winGame() {
+		stopTimer();
+		System.out.println("You won!");
 	}
 
 	private void startTimer() {
@@ -113,5 +116,12 @@ public class MinesweeperController {
 		};
 		timer = new Timer(1000, listener);
 		timer.start();
+	}
+	
+	private void stopTimer() {
+		if (timer != null && timer.isRunning()) {
+			timer.stop();
+		}
+		this.gameRunning = false;
 	}
 }

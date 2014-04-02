@@ -22,11 +22,10 @@ public class MinesweeperGUI {
 	}
 
 	private void createAndShowGUI() {
-		String title = Labels.gui_title;
-
-		window = new JFrame(title);
+		window = new JFrame(Labels.gui_title);
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setLocationRelativeTo(null); // center the window
 
 		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
 		window.setJMenuBar(mMenuBar);
@@ -34,14 +33,6 @@ public class MinesweeperGUI {
 		controller.newGame(Minefield.DIFFICULTY_BEGINNER);
 	}
 	
-
-	public int getRows() {
-		return controller.getMinefield().getRows();
-	}
-	
-	public int getColumns() {
-		return controller.getMinefield().getColumns();
-	}
 
 	public void showBoardPanel() {
 		board = new BoardJPanel(this);
