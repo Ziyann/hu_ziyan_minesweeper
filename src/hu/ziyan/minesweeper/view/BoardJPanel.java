@@ -59,7 +59,7 @@ public class BoardJPanel extends JPanel implements BoardGUI {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-		ImageIcon flagIcon = new ImageIcon("res/flag-32.png");
+		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
 		JButton flagsButton = new JButton("0/10", flagIcon);
 		flagsButton.setHorizontalTextPosition(JButton.CENTER);
 		flagsButton.setVerticalTextPosition(JButton.BOTTOM);
@@ -68,7 +68,7 @@ public class BoardJPanel extends JPanel implements BoardGUI {
 
 		panel.add(Box.createVerticalGlue());
 
-		ImageIcon restartIcon = new ImageIcon("res/restart-32.png");
+		ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
 		timeButton = new JButton("0:00", restartIcon);
 		timeButton.setHorizontalTextPosition(JButton.CENTER);
 		timeButton.setVerticalTextPosition(JButton.BOTTOM);
