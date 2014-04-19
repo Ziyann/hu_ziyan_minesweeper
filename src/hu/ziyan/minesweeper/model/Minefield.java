@@ -1,6 +1,5 @@
 package hu.ziyan.minesweeper.model;
 
-import hu.ziyan.minesweeper.view.JButtonField;
 
 public class Minefield {
 	public static final int DIFFICULTY_BEGINNER = 0;
@@ -10,7 +9,7 @@ public class Minefield {
 
 	private int rows, columns, mines;
 	private int remainingFields;
-	private JButtonField field[][];
+	private Field field[][];
 
 	public int getRows() {
 		return this.rows;
@@ -28,16 +27,31 @@ public class Minefield {
 		return this.remainingFields;
 	}
 	
+	public Field getField(int row, int column) {
+		return field[row][column];
+	}
+	
+	public boolean isFlagged(int row, int column) {
+		return field[row][column].isFlagged();
+	}
+	
+	
+	public void placeFlag(int row, int column) {
+		field[row][column].placeFlag();
+	}
+	
+	public void removeFlag(int row, int column) {
+		field[row][column].removeFlag();
+	}
+	
 	public void reveal(int row, int column) {
-		this.remainingFields--;
-		field[row][column].reveal();
+		if(field[row][column].getIsHidden()) {
+			this.remainingFields--;
+			field[row][column].setHidden(false);
+		}
 	}
 	
-	public JButtonField getButtonField(int row, int column) {
-		return this.field[row][column];
-	}
-	
-	public void setField(JButtonField field[][]) {
+	public void setField(Field field[][]) {
 		this.field = field;
 		this.remainingFields = (this.columns * this.rows) - this.mines;
 	}
