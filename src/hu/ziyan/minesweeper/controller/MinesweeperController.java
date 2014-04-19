@@ -16,6 +16,7 @@ public class MinesweeperController {
 	private MinefieldService service;
 	private MinesweeperGUI gui;
 	private Timer timer;
+	private int time;
 	private boolean isRevealingRunning = false;
 
 	/**
@@ -146,9 +147,10 @@ public class MinesweeperController {
 	}
 
 	private void startTimer() {
+		time = 0;
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.increaseTimer();
+				gui.setGameTime(++time);
 			}
 		};
 		timer = new Timer(1000, listener);

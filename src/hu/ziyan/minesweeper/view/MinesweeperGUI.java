@@ -60,8 +60,8 @@ public class MinesweeperGUI {
 		this.controller = controller;
 	}
 
-	public void increaseTimer() {
-		board.increaseTimer();
+	public void setGameTime(int time) {
+		board.setGameTime(time);
 	}
 
 	public void revealNumberField(int row, int column, int number) {

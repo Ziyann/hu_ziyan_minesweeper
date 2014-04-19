@@ -1,6 +1,5 @@
 package hu.ziyan.minesweeper.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,32 +7,32 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class BoardJPanel extends JPanel {
+public class BoardJPanel extends JPanel implements BoardGUI {
 	private static final long serialVersionUID = -3378369239204225291L;
 
 	private static final String EMPTY = "";
 	private static final String FLAG = "P";
 
-	private int time = 0;
-	private JLabel timerJLabel;
 	private JButton[][] buttonField;
 	private MinesweeperGUI gui;
+
+	private JButton timeButton;
 
 	public BoardJPanel(MinesweeperGUI gui) {
 		super();
 		this.gui = gui;
 
 		JPanel fieldPanel = getFieldPanel(gui.getController().getRows(), gui.getController().getColumns());
-		this.add(fieldPanel, BorderLayout.CENTER);
+		this.add(fieldPanel);
 
 		JPanel miscPanel = getMiscPanel();
-		this.add(miscPanel, BorderLayout.PAGE_END);
+		this.add(miscPanel);
 	}
 
 	private JPanel getFieldPanel(final int rows, final int columns) {
@@ -53,36 +52,46 @@ public class BoardJPanel extends JPanel {
 			}
 		}
 
-		c.insets = new Insets(0, 0, 0, 2);
-		c.gridy = gui.getController().getRows();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = gui.getController().getColumns() - 3;
-		c.gridwidth = 4;
-
 		return panel;
 	}
 
 	private JPanel getMiscPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		
-		ImageIcon pauseIcon = new ImageIcon("res/pause-512.png");
-		JButton pauseButton = new JButton(pauseIcon);
-		pauseButton.setPreferredSize(buttonField[0][0].getPreferredSize());
-		panel.add(pauseButton);
 
-		timerJLabel = new JLabel(Labels.time_label + "0");
-		timerJLabel.setFont(timerJLabel.getFont().deriveFont(15.0f));
-		panel.add(timerJLabel);
+		ImageIcon flagIcon = new ImageIcon("res/flag-32.png");
+		JButton flagsButton = new JButton("0/10", flagIcon);
+		flagsButton.setHorizontalTextPosition(JButton.CENTER);
+		flagsButton.setVerticalTextPosition(JButton.BOTTOM);
+		flagsButton.setFont(flagsButton.getFont().deriveFont(14.0f));
+		panel.add(flagsButton);
 
-		JButton restartButton = new JButton("R");
-		panel.add(restartButton);
+		panel.add(Box.createVerticalGlue());
+
+		ImageIcon restartIcon = new ImageIcon("res/restart-32.png");
+		timeButton = new JButton("0:00", restartIcon);
+		timeButton.setHorizontalTextPosition(JButton.CENTER);
+		timeButton.setVerticalTextPosition(JButton.BOTTOM);
+		timeButton.setFont(timeButton.getFont().deriveFont(14.0f));
+		timeButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent event) {
+				gui.getController().newGame();
+			}
+		});
+		panel.add(timeButton);
 
 		return panel;
 	}
 
-	public void increaseTimer() {
-		timerJLabel.setText(Labels.time_label + ++time);
+	public void setGameTime(int time) {
+		StringBuilder stb = new StringBuilder(String.valueOf(time / 60));
+		stb.append(":");
+		if (time % 60 < 10) {
+			stb.append("0");
+		}
+		stb.append(time % 60);
+
+		timeButton.setText(stb.toString());
 	}
 
 	private JButton createFieldButton(final int row, final int column) {
