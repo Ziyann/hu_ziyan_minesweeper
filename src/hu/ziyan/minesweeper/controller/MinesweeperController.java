@@ -49,7 +49,7 @@ public class MinesweeperController {
 	public void revealPosition(int row, int column) {
 		removeFlag(row, column);
 		if (minefield.getField(row, column).isMine()) {
-			gui.revealMine(row, column);
+			gui.revealPosition(row, column, -1);
 			loseGame();
 		} else {
 			gui.revealPosition(row, column, minefield.getField(row, column).getNearbyMinesNumber());
@@ -135,7 +135,7 @@ public class MinesweeperController {
 		for (int row = 0; row < minefield.getRows(); row++) {
 			for (int column = 0; column < minefield.getColumns(); column++) {
 				if (minefield.getField(row, column).isMine()) {
-					gui.revealMine(row, column);
+					gui.revealPosition(row, column, -1);
 				}
 			}
 		}

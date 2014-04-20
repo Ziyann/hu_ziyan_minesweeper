@@ -63,12 +63,8 @@ public class MinesweeperGUI {
 		board.setGameTime(time);
 	}
 
-	public void revealPosition(int row, int column, int number) {
-		board.revealPosition(row, column, number);
-	}
-
-	public void revealMine(int row, int column) {
-		board.revealMine(row, column);
+	public void revealPosition(int row, int column, int content) {
+		board.revealPosition(row, column, content);
 	}
 
 	public void removeFlag(int row, int column) {

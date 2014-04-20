@@ -4,7 +4,7 @@ package hu.ziyan.minesweeper.model;
 public class Minefield {
 	private int rows, columns, mines;
 	private int remainingFields;
-	private int flagsPlaced = 0;
+	private int flagsPlaced;
 	private Field field[][];
 
 	public int getRows() {

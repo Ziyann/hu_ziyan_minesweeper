@@ -126,7 +126,9 @@ class BoardJPanel extends JPanel implements BoardGUI {
 	public void revealPosition(int row, int column, int nearbyMines) {
 		buttonField[row][column].setContentAreaFilled(false);
 		buttonField[row][column].setFocusable(false);
-		if (nearbyMines == 1) {
+		if (nearbyMines == -1) {
+			buttonField[row][column].setText("<html><font color=red>X</font></html>");
+		} else if (nearbyMines == 1) {
 			buttonField[row][column].setText("<html><font color=blue>1</font></html>");
 		} else if (nearbyMines == 2) {
 			buttonField[row][column].setText("<html><font color=orange>2</font></html>");
@@ -142,11 +144,5 @@ class BoardJPanel extends JPanel implements BoardGUI {
 	public void placeFlag(int row, int column) {
 		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-20.png"));
 		buttonField[row][column].setIcon(flagIcon);
-	}
-
-	public void revealMine(int row, int column) {
-		buttonField[row][column].setContentAreaFilled(false);
-		buttonField[row][column].setFocusable(false);
-		buttonField[row][column].setText("<html><font color=red>X</font></html>");
 	}
 }
