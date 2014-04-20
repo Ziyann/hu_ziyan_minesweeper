@@ -29,11 +29,11 @@ public class Field {
 		return this.isFlagged;
 	}
 
-	public void placeFlag() {
+	void placeFlag() {
 		this.isFlagged = true;
 	}
 
-	public void removeFlag() {
+	void removeFlag() {
 		this.isFlagged = false;
 	}
 

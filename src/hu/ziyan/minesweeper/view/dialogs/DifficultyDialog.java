@@ -1,6 +1,5 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
-import hu.ziyan.minesweeper.model.Minefield;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.MinesweeperGUI;
 
@@ -23,7 +22,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class DifficultyDialog extends JDialog implements ActionListener {
-
 	private static final long serialVersionUID = 2377416291709037701L;
 	private MinesweeperGUI gui;
 	private ButtonGroup diffButtonGroup = new ButtonGroup();
@@ -40,11 +38,11 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	public DifficultyDialog(MinesweeperGUI gui, boolean modal) {
 		super(gui.getWindow(), modal);
 		this.gui = gui;
+		
 		this.setTitle(Labels.difficulty);
-		this.setLocationRelativeTo(gui.getWindow());
 		this.setResizable(false);
 
-		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
 		JPanel diffPanel = createDiffPanel();
 		JPanel buttonsPanel = createButtonsPanel();
@@ -53,6 +51,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 		this.add(buttonsPanel);
 
 		this.pack();
+		this.setLocationRelativeTo(gui.getWindow());
 		this.setVisible(true);
 	}
 
@@ -161,11 +160,11 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnOk) {
 			if (this.rdbtnBeginner.isSelected()) {
-				gui.getController().newGame(Minefield.DIFFICULTY_BEGINNER);
+				gui.getController().newGame(9, 9, 10);
 			} else if (this.rdbtnIntermediate.isSelected()) {
-				gui.getController().newGame(Minefield.DIFFICULTY_INTERMEDIATE);
+				gui.getController().newGame(16, 16, 40);
 			} else if (this.rdbtnAdvanced.isSelected()) {
-				gui.getController().newGame(Minefield.DIFFICULTY_ADVANCED);
+				gui.getController().newGame(16, 30, 99);
 			} else { // custom difficulty
 				int height = Integer.parseInt(textFieldHeight.getText());
 				int width = Integer.parseInt(textFieldWidth.getText());

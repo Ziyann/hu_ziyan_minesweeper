@@ -1,5 +1,6 @@
 package hu.ziyan.minesweeper.view;
 
+import hu.ziyan.minesweeper.view.dialogs.AboutDialog;
 import hu.ziyan.minesweeper.view.dialogs.DifficultyDialog;
 
 import java.awt.event.ActionEvent;
@@ -9,13 +10,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MinesweeperMenuBar extends JMenuBar implements ActionListener {
+class MinesweeperMenuBar extends JMenuBar implements ActionListener {
 
 	private static final long serialVersionUID = 406089122200172021L;
 	private static final String seperator = "seperator";
 	private MinesweeperGUI gui;
 
-	public MinesweeperMenuBar(MinesweeperGUI gui) {
+	MinesweeperMenuBar(MinesweeperGUI gui) {
 		super();
 		this.gui = gui;
 
@@ -46,9 +47,12 @@ public class MinesweeperMenuBar extends JMenuBar implements ActionListener {
 		if (actionCommand.equals(Labels.difficulty)) {
 			new DifficultyDialog(gui, true);
 		} else if (actionCommand.equals(Labels.new_game)) {
-			gui.getController().newGame();
+			gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
+					gui.getController().getMines());
 		} else if (actionCommand.equals(Labels.exit_label)) {
 			System.exit(0);
+		} else if(actionCommand.equals(Labels.about)) {
+			new AboutDialog(gui, true);
 		}
 
 	}

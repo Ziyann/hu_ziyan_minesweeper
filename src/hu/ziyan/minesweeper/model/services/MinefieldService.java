@@ -85,9 +85,9 @@ public class MinefieldService {
 
 	public void revealNearbyEmptyFields(int row, int column) {
 		class Position {
-			public int row, column;
+			private int row, column;
 
-			Position(int row, int column) {
+			private Position(int row, int column) {
 				this.row = row;
 				this.column = column;
 			}
@@ -104,54 +104,54 @@ public class MinefieldService {
 			 */
 			if (pos.row > 0 && minefield.getField(pos.row - 1, pos.column).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row - 1, pos.column));
-				controller.revealField(pos.row - 1, pos.column);
+				controller.revealPosition(pos.row - 1, pos.column);
 			} else if (pos.row > 0) {
-				controller.revealField(pos.row - 1, pos.column);
+				controller.revealPosition(pos.row - 1, pos.column);
 			}
 			if (pos.row > 0 && pos.column > 0 && minefield.getField(pos.row - 1, pos.column - 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row - 1, pos.column - 1));
-				controller.revealField(pos.row - 1, pos.column - 1);
+				controller.revealPosition(pos.row - 1, pos.column - 1);
 			} else if (pos.row > 0 && pos.column > 0) {
-				controller.revealField(pos.row - 1, pos.column - 1);
+				controller.revealPosition(pos.row - 1, pos.column - 1);
 			}
 			if (pos.column > 0 && minefield.getField(pos.row, pos.column - 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row, pos.column - 1));
-				controller.revealField(pos.row, pos.column - 1);
+				controller.revealPosition(pos.row, pos.column - 1);
 			} else if (pos.column > 0) {
-				controller.revealField(pos.row, pos.column - 1);
+				controller.revealPosition(pos.row, pos.column - 1);
 			}
 			if (pos.row < minefield.getRows() - 1 && pos.column > 0
 					&& minefield.getField(pos.row + 1, pos.column - 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row + 1, pos.column - 1));
-				controller.revealField(pos.row + 1, pos.column - 1);
+				controller.revealPosition(pos.row + 1, pos.column - 1);
 			} else if (pos.row < minefield.getRows() - 1 && pos.column > 0) {
-				controller.revealField(pos.row + 1, pos.column - 1);
+				controller.revealPosition(pos.row + 1, pos.column - 1);
 			}
 			if (pos.row < minefield.getRows() - 1 && minefield.getField(pos.row + 1, pos.column).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row + 1, pos.column));
-				controller.revealField(pos.row + 1, pos.column);
+				controller.revealPosition(pos.row + 1, pos.column);
 			} else if (pos.row < minefield.getRows() - 1) {
-				controller.revealField(pos.row + 1, pos.column);
+				controller.revealPosition(pos.row + 1, pos.column);
 			}
 			if (pos.row < minefield.getRows() - 1 && pos.column < minefield.getColumns() - 1
 					&& minefield.getField(pos.row + 1, pos.column + 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row + 1, pos.column + 1));
-				controller.revealField(pos.row + 1, pos.column + 1);
+				controller.revealPosition(pos.row + 1, pos.column + 1);
 			} else if (pos.row < minefield.getRows() - 1 && pos.column < minefield.getColumns() - 1) {
-				controller.revealField(pos.row + 1, pos.column + 1);
+				controller.revealPosition(pos.row + 1, pos.column + 1);
 			}
 			if (pos.column < minefield.getColumns() - 1 && minefield.getField(pos.row, pos.column + 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row, pos.column + 1));
-				controller.revealField(pos.row, pos.column + 1);
+				controller.revealPosition(pos.row, pos.column + 1);
 			} else if (pos.column < minefield.getColumns() - 1) {
-				controller.revealField(pos.row, pos.column + 1);
+				controller.revealPosition(pos.row, pos.column + 1);
 			}
 			if (pos.row > 0 && pos.column < minefield.getColumns() - 1
 					&& minefield.getField(pos.row - 1, pos.column + 1).isHiddenAndEmpty()) {
 				positions.add(new Position(pos.row - 1, pos.column + 1));
-				controller.revealField(pos.row - 1, pos.column + 1);
+				controller.revealPosition(pos.row - 1, pos.column + 1);
 			} else if (pos.row > 0 && pos.column < minefield.getColumns() - 1) {
-				controller.revealField(pos.row - 1, pos.column + 1);
+				controller.revealPosition(pos.row - 1, pos.column + 1);
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package hu.ziyan.minesweeper.view;
 
 import hu.ziyan.minesweeper.controller.MinesweeperController;
-import hu.ziyan.minesweeper.model.Minefield;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -34,7 +33,7 @@ public class MinesweeperGUI {
 		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
 		window.setJMenuBar(mMenuBar);
 
-		controller.newGame(Minefield.DIFFICULTY_BEGINNER);
+		controller.newGame(9, 9, 10);
 	}
 
 	public void showBoardPanel() {
@@ -64,23 +63,25 @@ public class MinesweeperGUI {
 		board.setGameTime(time);
 	}
 
-	public void revealNumberField(int row, int column, int number) {
-		board.revealNumberField(row, column, number);
+	public void revealPosition(int row, int column, int number) {
+		board.revealPosition(row, column, number);
 	}
 
 	public void revealMine(int row, int column) {
 		board.revealMine(row, column);
 	}
 
-	public void revealEmptyPosition(int row, int column) {
-		board.revealEmptyPosition(row, column);
-	}
-
 	public void removeFlag(int row, int column) {
 		board.removeFlag(row, column);
+		board.setFlagsNumber(getController().getFlagsNumber());
 	}
 
 	public void placeFlag(int row, int column) {
 		board.placeFlag(row, column);
+		board.setFlagsNumber(getController().getFlagsNumber());
+	}
+
+	public void setFlagsNumber(int flagsNumber) {
+		board.setFlagsNumber(getController().getFlagsNumber());
 	}
 }

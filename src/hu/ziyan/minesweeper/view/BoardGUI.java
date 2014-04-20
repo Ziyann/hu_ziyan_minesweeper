@@ -1,6 +1,6 @@
 package hu.ziyan.minesweeper.view;
 
-public interface BoardGUI {
+interface BoardGUI {
 	/**
 	 * Sets the elapsed game time.
 	 * 
@@ -17,9 +17,17 @@ public interface BoardGUI {
 	 * @param column
 	 *            column of the field
 	 * @param nearbyMines
-	 *            nearby mines around the position
+	 *            nearby mines around the position (can be 0)
 	 */
-	void revealNumberField(int row, int column, int nearbyMines);
+	void revealPosition(int row, int column, int nearbyMines);
+
+	/**
+	 * Updates the flags counter
+	 * 
+	 * @param flagsNumber
+	 *            current number of flags
+	 */
+	void setFlagsNumber(int flagsNumber);
 
 	/**
 	 * Removes the flag from the given position.
@@ -50,14 +58,4 @@ public interface BoardGUI {
 	 *            column of the field
 	 */
 	void revealMine(int row, int column);
-
-	/**
-	 * Reveals the given position, which is empty.
-	 * 
-	 * @param row
-	 *            row of the field
-	 * @param column
-	 *            column of the field
-	 */
-	void revealEmptyPosition(int row, int column);
 }
