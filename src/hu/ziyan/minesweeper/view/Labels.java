@@ -1,7 +1,7 @@
 package hu.ziyan.minesweeper.view;
 
 public final class Labels {
-	public static final String gui_title = "Minesweeper";
+	public static final String game_name = "Minesweeper";
 	public static final String exit_label = "Exit";
 	public static final String diff_beginner_label = "<html>Beginner<br>10 mines<br>9 x 9 tile grid</html>";
 	public static final String diff_intermediate_label = "<html>Intermediate<br>40 mines<br>16 x 16 tile grid</html>";

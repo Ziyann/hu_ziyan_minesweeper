@@ -23,8 +23,12 @@ public class Minefield {
 		return this.remainingFields;
 	}
 	
-	public Field getField(int row, int column) {
-		return field[row][column];
+	public boolean isHiddenAndEmpty(int row, int column) {
+		if(row >= 0 && row < rows && column >= 0 && column < columns) {
+			return field[row][column].isHiddenAndEmpty();
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean isFlagged(int row, int column) {
@@ -69,5 +73,13 @@ public class Minefield {
 		this.columns = columns;
 		this.mines = mines;
 		this.remainingFields = (this.columns * this.rows) - this.mines;
+	}
+
+	public boolean isMine(int row, int column) {
+		return field[row][column].isMine();
+	}
+
+	public int getNearbyMinesNumber(int row, int column) {
+		return field[row][column].getNearbyMinesNumber();
 	}
 }

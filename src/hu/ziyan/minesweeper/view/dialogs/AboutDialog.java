@@ -55,7 +55,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 		ImageIcon mineImage = new ImageIcon(getClass().getResource("/res/img/mine-160.png"));
-		JLabel picLabel = new JLabel(Labels.gui_title, mineImage, JLabel.CENTER);
+		JLabel picLabel = new JLabel(Labels.game_name, mineImage, JLabel.CENTER);
 		picLabel.setHorizontalTextPosition(JButton.CENTER);
 		picLabel.setVerticalTextPosition(JButton.BOTTOM);
 		picLabel.setAlignmentX(CENTER_ALIGNMENT);

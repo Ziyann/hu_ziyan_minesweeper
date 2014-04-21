@@ -23,7 +23,7 @@ public class MinesweeperGUI {
 	}
 
 	private void createAndShowGUI() {
-		window = new JFrame(Labels.gui_title);
+		window = new JFrame(Labels.game_name);
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

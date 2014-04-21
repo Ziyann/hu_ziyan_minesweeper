@@ -47,18 +47,20 @@ public class MinesweeperController {
 	 * @param column
 	 */
 	public void revealPosition(int row, int column) {
-		removeFlag(row, column);
-		if (minefield.getField(row, column).isMine()) {
-			gui.revealPosition(row, column, -1);
-			loseGame();
-		} else {
-			gui.revealPosition(row, column, minefield.getField(row, column).getNearbyMinesNumber());
-			if (minefield.getField(row, column).isHiddenAndEmpty()) {
-				revealNearbyEmptyFields(row, column);
+		if (row >= 0 && row < getRows() && column >= 0 && column < getColumns()) {
+			removeFlag(row, column);
+			if (minefield.isMine(row, column)) {
+				gui.revealPosition(row, column, -1);
+				loseGame();
+			} else {
+				gui.revealPosition(row, column, minefield.getNearbyMinesNumber(row, column));
+				if (minefield.isHiddenAndEmpty(row, column)) {
+					revealNearbyEmptyFields(row, column);
+				}
+				minefield.reveal(row, column);
 			}
-			minefield.reveal(row, column);
+			winGameIfOver();
 		}
-		winGameIfOver();
 	}
 
 	private void winGameIfOver() {
@@ -90,7 +92,7 @@ public class MinesweeperController {
 			removeFlag(row, column);
 		} else {
 			if (!gameStarted) {
-				while (minefield.getField(row, column).isMine()) {
+				while (minefield.isMine(row, column)) {
 					newGame(getRows(), getColumns(), getMines());
 				}
 				startGame();
@@ -123,7 +125,7 @@ public class MinesweeperController {
 		revealMines();
 		Object[] options = { Labels.new_game, Labels.exit_label };
 		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
-				Labels.gui_title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				Labels.game_name, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
 			newGame(getRows(), getColumns(), getMines());
 		} else {
@@ -134,7 +136,7 @@ public class MinesweeperController {
 	private void revealMines() {
 		for (int row = 0; row < minefield.getRows(); row++) {
 			for (int column = 0; column < minefield.getColumns(); column++) {
-				if (minefield.getField(row, column).isMine()) {
+				if (minefield.isMine(row, column)) {
 					gui.revealPosition(row, column, -1);
 				}
 			}

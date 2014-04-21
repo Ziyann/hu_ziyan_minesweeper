@@ -31,10 +31,10 @@ public class MinefieldService {
 		 * Place mines
 		 */
 		for (int i = 0; i < minefield.getMines(); ++i) {
-			Random veletlen = new Random();
+			Random rand = new Random();
 			while (true) {
-				int randomRow = veletlen.nextInt(minefield.getRows());
-				int randomColumn = veletlen.nextInt(minefield.getColumns());
+				int randomRow = rand.nextInt(minefield.getRows());
+				int randomColumn = rand.nextInt(minefield.getColumns());
 				if (field[randomRow][randomColumn].isMine() == false) {
 					field[randomRow][randomColumn].makeMine();
 					break;
@@ -100,59 +100,45 @@ public class MinefieldService {
 			Position pos = positions.get(i);
 
 			/*
-			 * add nearby empty fields to queue
+			 * add nearby hidden empty fields to queue
 			 */
-			if (pos.row > 0 && minefield.getField(pos.row - 1, pos.column).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row - 1, pos.column));
-				controller.revealPosition(pos.row - 1, pos.column);
-			} else if (pos.row > 0) {
-				controller.revealPosition(pos.row - 1, pos.column);
-			}
-			if (pos.row > 0 && pos.column > 0 && minefield.getField(pos.row - 1, pos.column - 1).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row - 1, pos.column - 1));
-				controller.revealPosition(pos.row - 1, pos.column - 1);
-			} else if (pos.row > 0 && pos.column > 0) {
-				controller.revealPosition(pos.row - 1, pos.column - 1);
-			}
-			if (pos.column > 0 && minefield.getField(pos.row, pos.column - 1).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row, pos.column - 1));
-				controller.revealPosition(pos.row, pos.column - 1);
-			} else if (pos.column > 0) {
-				controller.revealPosition(pos.row, pos.column - 1);
-			}
-			if (pos.row < minefield.getRows() - 1 && pos.column > 0
-					&& minefield.getField(pos.row + 1, pos.column - 1).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row + 1, pos.column - 1));
-				controller.revealPosition(pos.row + 1, pos.column - 1);
-			} else if (pos.row < minefield.getRows() - 1 && pos.column > 0) {
-				controller.revealPosition(pos.row + 1, pos.column - 1);
-			}
-			if (pos.row < minefield.getRows() - 1 && minefield.getField(pos.row + 1, pos.column).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row + 1, pos.column));
-				controller.revealPosition(pos.row + 1, pos.column);
-			} else if (pos.row < minefield.getRows() - 1) {
-				controller.revealPosition(pos.row + 1, pos.column);
-			}
-			if (pos.row < minefield.getRows() - 1 && pos.column < minefield.getColumns() - 1
-					&& minefield.getField(pos.row + 1, pos.column + 1).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row + 1, pos.column + 1));
-				controller.revealPosition(pos.row + 1, pos.column + 1);
-			} else if (pos.row < minefield.getRows() - 1 && pos.column < minefield.getColumns() - 1) {
-				controller.revealPosition(pos.row + 1, pos.column + 1);
-			}
-			if (pos.column < minefield.getColumns() - 1 && minefield.getField(pos.row, pos.column + 1).isHiddenAndEmpty()) {
-				positions.add(new Position(pos.row, pos.column + 1));
-				controller.revealPosition(pos.row, pos.column + 1);
-			} else if (pos.column < minefield.getColumns() - 1) {
-				controller.revealPosition(pos.row, pos.column + 1);
-			}
-			if (pos.row > 0 && pos.column < minefield.getColumns() - 1
-					&& minefield.getField(pos.row - 1, pos.column + 1).isHiddenAndEmpty()) {
+			if (minefield.isHiddenAndEmpty(pos.row - 1, pos.column + 1)) { // top-right
 				positions.add(new Position(pos.row - 1, pos.column + 1));
-				controller.revealPosition(pos.row - 1, pos.column + 1);
-			} else if (pos.row > 0 && pos.column < minefield.getColumns() - 1) {
-				controller.revealPosition(pos.row - 1, pos.column + 1);
 			}
+			if (minefield.isHiddenAndEmpty(pos.row - 1, pos.column)) { // top
+				positions.add(new Position(pos.row - 1, pos.column));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row - 1, pos.column - 1)) { // top-left
+				positions.add(new Position(pos.row - 1, pos.column - 1));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row, pos.column - 1)) { // left
+				positions.add(new Position(pos.row, pos.column - 1));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row, pos.column + 1)) { // right
+				positions.add(new Position(pos.row, pos.column + 1));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row + 1, pos.column + 1)) { // bottom-right
+				positions.add(new Position(pos.row + 1, pos.column + 1));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row + 1, pos.column)) { // bottom
+				positions.add(new Position(pos.row + 1, pos.column));
+			}
+			if (minefield.isHiddenAndEmpty(pos.row + 1, pos.column - 1)) { // bottom-left
+				positions.add(new Position(pos.row + 1, pos.column - 1));
+			}
+
+			/*
+			 * As the current position is always empty, we can reveal every
+			 * field around it
+			 */
+			controller.revealPosition(pos.row - 1, pos.column + 1); // top-right
+			controller.revealPosition(pos.row - 1, pos.column); // top
+			controller.revealPosition(pos.row - 1, pos.column - 1); // top-left
+			controller.revealPosition(pos.row, pos.column - 1); // left
+			controller.revealPosition(pos.row, pos.column + 1); // right
+			controller.revealPosition(pos.row + 1, pos.column + 1); // bottom-right
+			controller.revealPosition(pos.row + 1, pos.column); // bottom
+			controller.revealPosition(pos.row + 1, pos.column - 1); // bottom-left
 		}
 	}
 }
