@@ -6,9 +6,6 @@ public class Field {
 	private boolean isHidden = true;
 	private int nearbyMines;
 
-	public Field() {
-	}
-
 	public boolean isMine() {
 		return this.isMine;
 	}
@@ -46,10 +43,6 @@ public class Field {
 	}
 
 	public boolean isHiddenAndEmpty() {
-		if (this.nearbyMines == 0 && !this.isMine && this.isHidden) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.nearbyMines == 0 && !this.isMine && this.isHidden;
 	}
 }

@@ -64,7 +64,7 @@ public class MinefieldImpl implements Minefield {
 	
 	public void setField(Field field[][]) {
 		this.field = field;
-		this.remainingFields = (this.columns * this.rows) - this.mines;
+		this.remainingFields = this.columns * this.rows - this.mines;
 		this.flagsPlaced = 0;
 	}
 
@@ -72,7 +72,7 @@ public class MinefieldImpl implements Minefield {
 		this.rows = rows;
 		this.columns = columns;
 		this.mines = mines;
-		this.remainingFields = (this.columns * this.rows) - this.mines;
+		this.remainingFields = this.columns * this.rows - this.mines;
 	}
 
 	public boolean isMine(int row, int column) {

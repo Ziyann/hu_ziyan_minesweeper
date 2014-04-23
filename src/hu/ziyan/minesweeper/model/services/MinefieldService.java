@@ -5,6 +5,7 @@ import hu.ziyan.minesweeper.model.Field;
 import hu.ziyan.minesweeper.model.MinefieldImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MinefieldService {
@@ -35,7 +36,7 @@ public class MinefieldService {
 			while (true) {
 				int randomRow = rand.nextInt(minefield.getRows());
 				int randomColumn = rand.nextInt(minefield.getColumns());
-				if (field[randomRow][randomColumn].isMine() == false) {
+				if (!field[randomRow][randomColumn].isMine()) {
 					field[randomRow][randomColumn].makeMine();
 					break;
 				}
@@ -85,14 +86,14 @@ public class MinefieldService {
 
 	public void revealNearbyEmptyFields(int row, int column) {
 		class Position {
-			private int row, column;
+			public int row, column;
 
-			private Position(int row, int column) {
+			public Position(int row, int column) {
 				this.row = row;
 				this.column = column;
 			}
 		}
-		ArrayList<Position> positions = new ArrayList<Position>();
+		List<Position> positions = new ArrayList<Position>();
 
 		positions.add(new Position(row, column));
 
