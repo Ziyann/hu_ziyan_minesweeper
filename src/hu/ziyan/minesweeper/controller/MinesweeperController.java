@@ -9,12 +9,12 @@ import javax.swing.Timer;
 import hu.ziyan.minesweeper.model.Minefield;
 import hu.ziyan.minesweeper.model.services.MinefieldService;
 import hu.ziyan.minesweeper.view.Labels;
-import hu.ziyan.minesweeper.view.MinesweeperGUI;
+import hu.ziyan.minesweeper.view.ViewController;
 
 public class MinesweeperController {
 	private Minefield minefield;
 	private MinefieldService service;
-	private MinesweeperGUI gui;
+	private ViewController gui;
 	private Timer timer;
 	private int time;
 	private boolean isRevealingRunning = false;
@@ -24,7 +24,7 @@ public class MinesweeperController {
 	 * Starts the desktop GUI
 	 */
 	public void startDesktop() {
-		gui = new MinesweeperGUI(this);
+		gui = new ViewController(this);
 		gui.startGUI();
 	}
 

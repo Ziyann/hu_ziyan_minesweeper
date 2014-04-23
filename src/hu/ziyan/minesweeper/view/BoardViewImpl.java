@@ -14,15 +14,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-class BoardJPanel extends JPanel implements BoardGUI {
+class BoardViewImpl extends JPanel implements BoardView {
 	private static final long serialVersionUID = -3378369239204225291L;
 
 	private JButton[][] buttonField;
-	private MinesweeperGUI gui;
+	private ViewController gui;
 	private JLabel flagsLabel;
 	private JLabel timeLabel;
 
-	BoardJPanel(MinesweeperGUI gui) {
+	BoardViewImpl(ViewController gui) {
 		super();
 		this.setLayout(new BorderLayout());
 		this.gui = gui;

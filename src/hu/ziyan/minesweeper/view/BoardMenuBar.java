@@ -10,13 +10,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-class MinesweeperMenuBar extends JMenuBar implements ActionListener {
+class BoardMenuBar extends JMenuBar implements ActionListener {
 
 	private static final long serialVersionUID = 406089122200172021L;
 	private static final String seperator = "seperator";
-	private MinesweeperGUI gui;
+	private ViewController gui;
 
-	MinesweeperMenuBar(MinesweeperGUI gui) {
+	BoardMenuBar(ViewController gui) {
 		super();
 		this.gui = gui;
 

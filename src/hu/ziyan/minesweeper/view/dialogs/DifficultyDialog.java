@@ -1,7 +1,7 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
 import hu.ziyan.minesweeper.view.Labels;
-import hu.ziyan.minesweeper.view.MinesweeperGUI;
+import hu.ziyan.minesweeper.view.ViewController;
 
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 
 public class DifficultyDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 2377416291709037701L;
-	private MinesweeperGUI gui;
+	private ViewController gui;
 	private ButtonGroup diffButtonGroup = new ButtonGroup();
 	private JButton btnOk;
 	private JButton btnCancel;
@@ -35,7 +35,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	private JTextField textFieldWidth;
 	private JTextField textFieldMines;
 
-	public DifficultyDialog(MinesweeperGUI gui, boolean modal) {
+	public DifficultyDialog(ViewController gui, boolean modal) {
 		super(gui.getWindow(), modal);
 		this.gui = gui;
 		

@@ -8,11 +8,11 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-public class MinesweeperGUI {
+public class ViewController {
 
 	private JFrame window;
 	private MinesweeperController controller;
-	private BoardJPanel board;
+	private BoardViewImpl board;
 
 	public void startGUI() {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -30,14 +30,15 @@ public class MinesweeperGUI {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setLocation(dim.width / 5, dim.height / 5);
 
-		MinesweeperMenuBar mMenuBar = new MinesweeperMenuBar(this);
-		window.setJMenuBar(mMenuBar);
+		
 
 		controller.newGame(9, 9, 10);
 	}
 
 	public void showBoardPanel() {
-		board = new BoardJPanel(this);
+		BoardMenuBar menuBar = new BoardMenuBar(this);
+		window.setJMenuBar(menuBar);
+		board = new BoardViewImpl(this);
 		setActualContent(board);
 	}
 
@@ -55,7 +56,7 @@ public class MinesweeperGUI {
 		return controller;
 	}
 
-	public MinesweeperGUI(MinesweeperController controller) {
+	public ViewController(MinesweeperController controller) {
 		this.controller = controller;
 	}
 

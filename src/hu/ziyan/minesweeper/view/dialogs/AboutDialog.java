@@ -1,7 +1,7 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
 import hu.ziyan.minesweeper.view.Labels;
-import hu.ziyan.minesweeper.view.MinesweeperGUI;
+import hu.ziyan.minesweeper.view.ViewController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -4903478112510111407L;
 	private JButton closeButton;
 
-	public AboutDialog(MinesweeperGUI gui, boolean modal) {
+	public AboutDialog(ViewController gui, boolean modal) {
 		super(gui.getWindow(), modal);
 
 		this.setTitle(Labels.about);

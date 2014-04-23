@@ -1,6 +1,6 @@
 package hu.ziyan.minesweeper.view;
 
-interface BoardGUI {
+interface BoardView {
 	/**
 	 * Sets the elapsed game time.
 	 * 
