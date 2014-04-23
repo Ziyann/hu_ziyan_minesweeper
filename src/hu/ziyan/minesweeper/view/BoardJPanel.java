@@ -60,7 +60,7 @@ class BoardJPanel extends JPanel implements BoardGUI {
 		panel.setLayout(new BorderLayout());
 
 		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
-		JLabel flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
+		flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
 		flagsLabel.setHorizontalTextPosition(JLabel.CENTER);
 		flagsLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		flagsLabel.setFont(flagsLabel.getFont().deriveFont(14.0f));
