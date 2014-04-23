@@ -19,8 +19,8 @@ class BoardJPanel extends JPanel implements BoardGUI {
 
 	private JButton[][] buttonField;
 	private MinesweeperGUI gui;
-	private JButton timeButton;
 	private JLabel flagsLabel;
+	private JLabel timeLabel;
 
 	BoardJPanel(MinesweeperGUI gui) {
 		super();
@@ -60,24 +60,28 @@ class BoardJPanel extends JPanel implements BoardGUI {
 		panel.setLayout(new BorderLayout());
 
 		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
-		flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
+		JLabel flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
 		flagsLabel.setHorizontalTextPosition(JLabel.CENTER);
 		flagsLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		flagsLabel.setFont(flagsLabel.getFont().deriveFont(14.0f));
 		panel.add(flagsLabel, BorderLayout.PAGE_START);
+		
+		ImageIcon timeIcon = new ImageIcon(getClass().getResource("/res/img/time-32.png"));
+		timeLabel = new JLabel("0:00", timeIcon, JLabel.CENTER);
+		timeLabel.setHorizontalTextPosition(JLabel.CENTER);
+		timeLabel.setVerticalTextPosition(JLabel.BOTTOM);
+		timeLabel.setFont(timeLabel.getFont().deriveFont(14.0f));
+		panel.add(timeLabel, BorderLayout.CENTER);
 
 		ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
-		timeButton = new JButton("0:00", restartIcon);
-		timeButton.setHorizontalTextPosition(JButton.CENTER);
-		timeButton.setVerticalTextPosition(JButton.BOTTOM);
-		timeButton.setFont(timeButton.getFont().deriveFont(14.0f));
-		timeButton.addMouseListener(new MouseAdapter() {
+		JButton restartButton = new JButton(restartIcon);
+		restartButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent event) {
 				gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
 						gui.getController().getMines());
 			}
 		});
-		panel.add(timeButton, BorderLayout.PAGE_END);
+		panel.add(restartButton, BorderLayout.PAGE_END);
 
 		return panel;
 	}
@@ -120,7 +124,7 @@ class BoardJPanel extends JPanel implements BoardGUI {
 		}
 		stb.append(time % 60);
 
-		timeButton.setText(stb.toString());
+		timeLabel.setText(stb.toString());
 	}
 
 	public void revealPosition(int row, int column, int nearbyMines) {
