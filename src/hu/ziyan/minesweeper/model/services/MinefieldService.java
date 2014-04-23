@@ -2,16 +2,16 @@ package hu.ziyan.minesweeper.model.services;
 
 import hu.ziyan.minesweeper.controller.MinesweeperController;
 import hu.ziyan.minesweeper.model.Field;
-import hu.ziyan.minesweeper.model.Minefield;
+import hu.ziyan.minesweeper.model.MinefieldImpl;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MinefieldService {
-	private Minefield minefield;
+	private MinefieldImpl minefield;
 	private MinesweeperController controller;
 
-	public MinefieldService(MinesweeperController controller, Minefield minefield) {
+	public MinefieldService(MinesweeperController controller, MinefieldImpl minefield) {
 		this.controller = controller;
 		this.minefield = minefield;
 	}

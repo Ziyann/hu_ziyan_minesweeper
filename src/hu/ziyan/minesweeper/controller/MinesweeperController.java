@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import hu.ziyan.minesweeper.model.Minefield;
+import hu.ziyan.minesweeper.model.MinefieldImpl;
 import hu.ziyan.minesweeper.model.services.MinefieldService;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.ViewController;
 
 public class MinesweeperController {
-	private Minefield minefield;
+	private MinefieldImpl minefield;
 	private MinefieldService service;
 	private ViewController gui;
 	private Timer timer;
@@ -29,7 +29,7 @@ public class MinesweeperController {
 	}
 
 	public void newGame(int rows, int columns, int mines) {
-		this.minefield = new Minefield(rows, columns, mines);
+		this.minefield = new MinefieldImpl(rows, columns, mines);
 		service = new MinefieldService(this, this.minefield);
 		service.makeField();
 		stopTimer();
