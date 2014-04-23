@@ -13,9 +13,8 @@ interface BoardGUI {
 	 * Reveals a position, indicating the number of nearby mines.
 	 * 
 	 * @param row
-	 *            row of the field
 	 * @param column
-	 *            column of the field
+	 * 
 	 * @param content
 	 *            Content of the position. 0 to 8 indicates the nearby mines
 	 *            number, or -1 means it's a mine.
@@ -34,9 +33,8 @@ interface BoardGUI {
 	 * Removes the flag from the given position.
 	 * 
 	 * @param row
-	 *            row of the field
 	 * @param column
-	 *            column of the field
+	 * 
 	 */
 	void removeFlag(int row, int column);
 
@@ -44,9 +42,8 @@ interface BoardGUI {
 	 * Places a flag to the given position.
 	 * 
 	 * @param row
-	 *            row of the field
 	 * @param column
-	 *            column of the field
+	 * 
 	 */
 	void placeFlag(int row, int column);
 }

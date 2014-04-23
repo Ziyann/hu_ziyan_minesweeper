@@ -18,10 +18,6 @@ public class MinesweeperController {
 	private Timer timer;
 	private int time;
 	private boolean isRevealingRunning = false;
-
-	/**
-	 * true if at least one field has been revealed
-	 */
 	private boolean gameStarted = false;
 
 	/**
