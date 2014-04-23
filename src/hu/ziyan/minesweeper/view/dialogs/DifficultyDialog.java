@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 
 public class DifficultyDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 2377416291709037701L;
-	private ViewController gui;
+	private final ViewController gui;
 	private ButtonGroup diffButtonGroup = new ButtonGroup();
 	private JButton btnOk;
 	private JButton btnCancel;
@@ -35,7 +35,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	private JTextField textFieldWidth;
 	private JTextField textFieldMines;
 
-	public DifficultyDialog(ViewController gui, boolean modal) {
+	public DifficultyDialog(final ViewController gui, final boolean modal) {
 		super(gui.getWindow(), modal);
 		this.gui = gui;
 		
@@ -44,8 +44,8 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
-		JPanel diffPanel = createDiffPanel();
-		JPanel buttonsPanel = createButtonsPanel();
+		final JPanel diffPanel = createDiffPanel();
+		final JPanel buttonsPanel = createButtonsPanel();
 
 		this.add(diffPanel);
 		this.add(buttonsPanel);
@@ -56,7 +56,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	}
 
 	private JPanel createButtonsPanel() {
-		JPanel buttonsPanel = new JPanel();
+		final JPanel buttonsPanel = new JPanel();
 
 		btnOk = new JButton(Labels.ok);
 		btnCancel = new JButton(Labels.cancel);
@@ -71,18 +71,18 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	}
 
 	private JPanel createCustomDiffPanel() {
-		JPanel customDiffPanel = new JPanel();
+		final JPanel customDiffPanel = new JPanel();
 
 		customDiffPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		final GridBagConstraints gbc = new GridBagConstraints();
 
 		rdbtnCustom = new JRadioButton(Labels.diff_custom_label);
 		rdbtnCustom.addActionListener(this);
 		diffButtonGroup.add(rdbtnCustom);
 
-		JLabel lblHeight = new JLabel(Labels.diff_height);
-		JLabel lblWidth = new JLabel(Labels.diff_width);
-		JLabel lblMines = new JLabel(Labels.diff_mines);
+		final JLabel lblHeight = new JLabel(Labels.diff_height);
+		final JLabel lblWidth = new JLabel(Labels.diff_width);
+		final JLabel lblMines = new JLabel(Labels.diff_mines);
 
 		textFieldHeight = new JFormattedTextField(NumberFormat.getInstance());
 		textFieldWidth = new JFormattedTextField(NumberFormat.getInstance());
@@ -97,39 +97,39 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 		textFieldMines.setColumns(3);
 		textFieldMines.setEnabled(false);
 
-		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(0, 12, 6, 2);
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.insets = new Insets(0, 12, 6, 2);
 
-		c.gridx = 0;
-		c.gridy = 0;
-		customDiffPanel.add(rdbtnCustom, c);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		customDiffPanel.add(rdbtnCustom, gbc);
 
-		c.gridy = 1;
-		c.gridx = 0;
-		customDiffPanel.add(lblHeight, c);
-		c.gridx = 1;
-		customDiffPanel.add(textFieldHeight, c);
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		customDiffPanel.add(lblHeight, gbc);
+		gbc.gridx = 1;
+		customDiffPanel.add(textFieldHeight, gbc);
 
-		c.gridy = 2;
-		c.gridx = 0;
-		customDiffPanel.add(lblWidth, c);
-		c.gridx = 1;
-		customDiffPanel.add(textFieldWidth, c);
+		gbc.gridy = 2;
+		gbc.gridx = 0;
+		customDiffPanel.add(lblWidth, gbc);
+		gbc.gridx = 1;
+		customDiffPanel.add(textFieldWidth, gbc);
 
-		c.gridy = 3;
-		c.gridx = 0;
-		customDiffPanel.add(lblMines, c);
-		c.gridx = 1;
-		customDiffPanel.add(textFieldMines, c);
+		gbc.gridy = 3;
+		gbc.gridx = 0;
+		customDiffPanel.add(lblMines, gbc);
+		gbc.gridx = 1;
+		customDiffPanel.add(textFieldMines, gbc);
 
 		return customDiffPanel;
 	}
 
 	private JPanel createDiffPanel() {
-		JPanel diffPanel = new JPanel();
+		final JPanel diffPanel = new JPanel();
 		diffPanel.setLayout(new FlowLayout());
-		JPanel predefinedDiffPanel = new JPanel();
-		JPanel customDiffPanel = createCustomDiffPanel();
+		final JPanel predefinedDiffPanel = new JPanel();
+		final JPanel customDiffPanel = createCustomDiffPanel();
 
 		predefinedDiffPanel.setLayout(new BoxLayout(predefinedDiffPanel, BoxLayout.PAGE_AXIS));
 
@@ -157,7 +157,7 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == this.btnOk) {
 			if (this.rdbtnBeginner.isSelected()) {
 				gui.getController().newGame(9, 9, 10);

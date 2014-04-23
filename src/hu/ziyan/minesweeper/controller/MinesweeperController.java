@@ -42,7 +42,7 @@ public class MinesweeperController {
 	 * @param row
 	 * @param column
 	 */
-	public void revealPosition(int row, int column) {
+	public void revealPosition(final int row, final int column) {
 		if (row >= 0 && row < getRows() && column >= 0 && column < getColumns()) {
 			removeFlag(row, column);
 			if (minefield.isMine(row, column)) {
@@ -66,7 +66,7 @@ public class MinesweeperController {
 		}
 	}
 
-	private void revealNearbyEmptyFields(int row, int column) {
+	private void revealNearbyEmptyFields(final int row, final int column) {
 		if (!isRevealingRunning) {
 			isRevealingRunning = true;
 			service.revealNearbyEmptyFields(row, column);
@@ -83,7 +83,7 @@ public class MinesweeperController {
 	 * @param column
 	 *            the clicked column
 	 */
-	public void fieldClick(int row, int column) {
+	public void fieldClick(final int row, final int column) {
 		if (isFlagged(row, column)) {
 			removeFlag(row, column);
 		} else {
@@ -97,16 +97,16 @@ public class MinesweeperController {
 		}
 	}
 
-	private boolean isFlagged(int row, int column) {
+	private boolean isFlagged(final int row, final int column) {
 		return minefield.isFlagged(row, column);
 	}
 
-	public void placeFlag(int row, int column) {
+	public void placeFlag(final int row, final int column) {
 		minefield.placeFlag(row, column);
 		gui.placeFlag(row, column);
 	}
 
-	private void removeFlag(int row, int column) {
+	private void removeFlag(final int row, final int column) {
 		if (isFlagged(row, column)) {
 			minefield.removeFlag(row, column);
 			gui.removeFlag(row, column);
@@ -119,8 +119,8 @@ public class MinesweeperController {
 	private void loseGame() {
 		stopTimer();
 		revealMines();
-		Object[] options = { Labels.new_game, Labels.exit_label };
-		int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
+		final Object[] options = { Labels.new_game, Labels.exit_label };
+		final int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
 				Labels.game_name, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
 			newGame(getRows(), getColumns(), getMines());
@@ -154,8 +154,8 @@ public class MinesweeperController {
 
 	private void startTimer() {
 		time = 0;
-		ActionListener listener = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		final ActionListener listener = new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
 				gui.setGameTime(++time);
 			}
 		};

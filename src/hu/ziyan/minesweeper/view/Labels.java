@@ -18,4 +18,7 @@ public final class Labels {
 	public static final String ok = "OK";
 	public static final String cancel = "Cancel";
 	public static final String close = "Close";
+
+	private Labels() {
+	}
 }

@@ -7,7 +7,7 @@ interface BoardView {
 	 * @param time
 	 *            elapsed time in seconds
 	 */
-	void setGameTime(int time);
+	void setGameTime(final int time);
 
 	/**
 	 * Reveals a position, indicating the number of nearby mines.
@@ -19,7 +19,7 @@ interface BoardView {
 	 *            Content of the position. 0 to 8 indicates the nearby mines
 	 *            number, or -1 means it's a mine.
 	 */
-	void revealPosition(int row, int column, int content);
+	void revealPosition(final int row, final int column, final int content);
 
 	/**
 	 * Updates the flags counter
@@ -27,7 +27,7 @@ interface BoardView {
 	 * @param flagsNumber
 	 *            current number of flags
 	 */
-	void setFlagsNumber(int flagsNumber);
+	void setFlagsNumber(final int flagsNumber);
 
 	/**
 	 * Removes the flag from the given position.
@@ -36,7 +36,7 @@ interface BoardView {
 	 * @param column
 	 * 
 	 */
-	void removeFlag(int row, int column);
+	void removeFlag(final int row, final int column);
 
 	/**
 	 * Places a flag to the given position.
@@ -45,5 +45,5 @@ interface BoardView {
 	 * @param column
 	 * 
 	 */
-	void placeFlag(int row, int column);
+	void placeFlag(final int row, final int column);
 }

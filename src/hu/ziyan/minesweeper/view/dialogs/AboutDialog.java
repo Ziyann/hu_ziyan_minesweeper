@@ -18,60 +18,60 @@ public class AboutDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -4903478112510111407L;
 	private JButton closeButton;
 
-	public AboutDialog(ViewController gui, boolean modal) {
+	public AboutDialog(final ViewController gui, final boolean modal) {
 		super(gui.getWindow(), modal);
 
 		this.setTitle(Labels.about);
 		this.setResizable(false);
-		
+
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-		
-		JPanel mainPanel = createMainPanel();
+
+		final JPanel mainPanel = createMainPanel();
 		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		JPanel buttonPanel = createButtonPanel();
-		
+
+		final JPanel buttonPanel = createButtonPanel();
+
 		this.add(mainPanel);
 		this.add(buttonPanel);
-		
+
 		this.pack();
 		this.setLocationRelativeTo(gui.getWindow());
 		this.setVisible(true);
 	}
 
 	private JPanel createButtonPanel() {
-		JPanel panel = new JPanel();
-		
+		final JPanel panel = new JPanel();
+
 		closeButton = new JButton(Labels.close);
 		closeButton.addActionListener(this);
-		
+
 		panel.add(closeButton);
-		
+
 		return panel;
 	}
 
 	private JPanel createMainPanel() {
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		
-		ImageIcon mineImage = new ImageIcon(getClass().getResource("/res/img/mine-160.png"));
-		JLabel picLabel = new JLabel(Labels.game_name, mineImage, JLabel.CENTER);
+
+		final ImageIcon mineImage = new ImageIcon(getClass().getResource("/res/img/mine-160.png"));
+		final JLabel picLabel = new JLabel(Labels.game_name, mineImage, JLabel.CENTER);
 		picLabel.setHorizontalTextPosition(JButton.CENTER);
 		picLabel.setVerticalTextPosition(JButton.BOTTOM);
 		picLabel.setAlignmentX(CENTER_ALIGNMENT);
-		
-		JLabel versionLabel = new JLabel("Version: " + "1.00");
+
+		final JLabel versionLabel = new JLabel("Version: " + "1.00");
 		versionLabel.setAlignmentX(CENTER_ALIGNMENT);
-		
+
 		panel.add(picLabel);
 		panel.add(versionLabel);
-		
+
 		return panel;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == closeButton) {
+	public void actionPerformed(final ActionEvent event) {
+		if (event.getSource() == closeButton) {
 			this.setVisible(false);
 		}
 	}

@@ -12,7 +12,7 @@ public class MinefieldService {
 	private MinefieldImpl minefield;
 	private MinesweeperController controller;
 
-	public MinefieldService(MinesweeperController controller, MinefieldImpl minefield) {
+	public MinefieldService(final MinesweeperController controller, final MinefieldImpl minefield) {
 		this.controller = controller;
 		this.minefield = minefield;
 	}
@@ -31,11 +31,11 @@ public class MinefieldService {
 		/*
 		 * Place mines
 		 */
-		for (int i = 0; i < minefield.getMines(); ++i) {
-			Random rand = new Random();
+		Random rand = new Random();
+		for (int i = 0; i < minefield.getMines(); i++) {
 			while (true) {
-				int randomRow = rand.nextInt(minefield.getRows());
-				int randomColumn = rand.nextInt(minefield.getColumns());
+				final int randomRow = rand.nextInt(minefield.getRows());
+				final int randomColumn = rand.nextInt(minefield.getColumns());
 				if (!field[randomRow][randomColumn].isMine()) {
 					field[randomRow][randomColumn].makeMine();
 					break;
@@ -48,47 +48,46 @@ public class MinefieldService {
 		 */
 		for (int row = 0; row < minefield.getRows(); row++) {
 			for (int column = 0; column < minefield.getColumns(); column++) {
-				if (field[row][column].isMine()) { // skip mines
-					continue;
+				if (!field[row][column].isMine()) { // skip mines
+					int nearbyMines = 0;
+					if (row < minefield.getRows() - 1 && column < minefield.getColumns() - 1
+							&& field[row + 1][column + 1].isMine()) {
+						++nearbyMines;
+					}
+					if (row < minefield.getRows() - 1 && field[row + 1][column].isMine()) {
+						++nearbyMines;
+					}
+					if (column > 0 && row < minefield.getRows() - 1 && field[row + 1][column - 1].isMine()) {
+						++nearbyMines;
+					}
+					if (row > 0 && column > 0 && field[row - 1][column - 1].isMine()) {
+						++nearbyMines;
+					}
+					if (row > 0 && column < minefield.getColumns() - 1 && field[row - 1][column + 1].isMine()) {
+						++nearbyMines;
+					}
+					if (row > 0 && field[row - 1][column].isMine()) {
+						++nearbyMines;
+					}
+					if (column < minefield.getColumns() - 1 && field[row][column + 1].isMine()) {
+						++nearbyMines;
+					}
+					if (column > 0 && field[row][column - 1].isMine()) {
+						++nearbyMines;
+					}
+					field[row][column].setNearbyMines(nearbyMines);
 				}
-				int nearbyMines = 0;
-				if (row < minefield.getRows() - 1 && column < minefield.getColumns() - 1
-						&& field[row + 1][column + 1].isMine()) {
-					++nearbyMines;
-				}
-				if (row < minefield.getRows() - 1 && field[row + 1][column].isMine()) {
-					++nearbyMines;
-				}
-				if (column > 0 && row < minefield.getRows() - 1 && field[row + 1][column - 1].isMine()) {
-					++nearbyMines;
-				}
-				if (row > 0 && column > 0 && field[row - 1][column - 1].isMine()) {
-					++nearbyMines;
-				}
-				if (row > 0 && column < minefield.getColumns() - 1 && field[row - 1][column + 1].isMine()) {
-					++nearbyMines;
-				}
-				if (row > 0 && field[row - 1][column].isMine()) {
-					++nearbyMines;
-				}
-				if (column < minefield.getColumns() - 1 && field[row][column + 1].isMine()) {
-					++nearbyMines;
-				}
-				if (column > 0 && field[row][column - 1].isMine()) {
-					++nearbyMines;
-				}
-				field[row][column].setNearbyMines(nearbyMines);
 			}
 		}
 
 		minefield.setField(field);
 	}
 
-	public void revealNearbyEmptyFields(int row, int column) {
+	public void revealNearbyEmptyFields(final int row, final int column) {
 		class Position {
 			public int row, column;
 
-			public Position(int row, int column) {
+			public Position(final int row, final int column) {
 				this.row = row;
 				this.column = column;
 			}
@@ -98,7 +97,7 @@ public class MinefieldService {
 		positions.add(new Position(row, column));
 
 		for (int i = 0; i < positions.size(); i++) {
-			Position pos = positions.get(i);
+			final Position pos = positions.get(i);
 
 			/*
 			 * add nearby hidden empty fields to queue

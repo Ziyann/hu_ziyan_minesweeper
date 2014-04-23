@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 public class ViewController {
 
 	private JFrame window;
-	private MinesweeperController controller;
+	final private MinesweeperController controller;
 	private BoardViewImpl board;
 
 	public void startGUI() {
@@ -27,7 +27,7 @@ public class ViewController {
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setLocation(dim.width / 5, dim.height / 5);
 
 		
@@ -36,13 +36,13 @@ public class ViewController {
 	}
 
 	public void showBoardPanel() {
-		BoardMenuBar menuBar = new BoardMenuBar(this);
+		final BoardMenuBar menuBar = new BoardMenuBar(this);
 		window.setJMenuBar(menuBar);
 		board = new BoardViewImpl(this);
 		setActualContent(board);
 	}
 
-	private void setActualContent(Container container) {
+	private void setActualContent(final Container container) {
 		window.setContentPane(container);
 		window.pack();
 		window.setVisible(true);
@@ -56,29 +56,25 @@ public class ViewController {
 		return controller;
 	}
 
-	public ViewController(MinesweeperController controller) {
+	public ViewController(final MinesweeperController controller) {
 		this.controller = controller;
 	}
 
-	public void setGameTime(int time) {
+	public void setGameTime(final int time) {
 		board.setGameTime(time);
 	}
 
-	public void revealPosition(int row, int column, int content) {
+	public void revealPosition(final int row, final int column, final int content) {
 		board.revealPosition(row, column, content);
 	}
 
-	public void removeFlag(int row, int column) {
+	public void removeFlag(final int row, final int column) {
 		board.removeFlag(row, column);
 		board.setFlagsNumber(getController().getFlagsNumber());
 	}
 
-	public void placeFlag(int row, int column) {
+	public void placeFlag(final int row, final int column) {
 		board.placeFlag(row, column);
-		board.setFlagsNumber(getController().getFlagsNumber());
-	}
-
-	public void setFlagsNumber(int flagsNumber) {
 		board.setFlagsNumber(getController().getFlagsNumber());
 	}
 }

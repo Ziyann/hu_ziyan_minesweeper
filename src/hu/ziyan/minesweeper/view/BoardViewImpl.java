@@ -18,26 +18,26 @@ class BoardViewImpl extends JPanel implements BoardView {
 	private static final long serialVersionUID = -3378369239204225291L;
 
 	private JButton[][] buttonField;
-	private ViewController gui;
+	private final ViewController gui;
 	private JLabel flagsLabel;
 	private JLabel timeLabel;
 
-	BoardViewImpl(ViewController gui) {
+	BoardViewImpl(final ViewController gui) {
 		super();
 		this.setLayout(new BorderLayout());
 		this.gui = gui;
 
-		JPanel fieldPanel = getFieldPanel(gui.getController().getRows(), gui.getController().getColumns());
+		final JPanel fieldPanel = getFieldPanel(gui.getController().getRows(), gui.getController().getColumns());
 		this.add(fieldPanel, BorderLayout.LINE_START);
 
-		JPanel miscPanel = getMiscPanel();
+		final JPanel miscPanel = getMiscPanel();
 		miscPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.add(miscPanel, BorderLayout.LINE_END);
 	}
 
 	private JPanel getFieldPanel(final int rows, final int columns) {
-		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		final JPanel panel = new JPanel(new GridBagLayout());
+		final GridBagConstraints gbc = new GridBagConstraints();
 
 		/*
 		 * place buttons
@@ -45,10 +45,10 @@ class BoardViewImpl extends JPanel implements BoardView {
 		this.buttonField = new JButton[rows][columns];
 		for (int row = 0; row < rows; row++) {
 			for (int column = 0; column < columns; column++) {
-				c.gridx = column;
-				c.gridy = row;
+				gbc.gridx = column;
+				gbc.gridy = row;
 				buttonField[row][column] = createFieldButton(row, column);
-				panel.add(buttonField[row][column], c);
+				panel.add(buttonField[row][column], gbc);
 			}
 		}
 
@@ -56,27 +56,27 @@ class BoardViewImpl extends JPanel implements BoardView {
 	}
 
 	private JPanel getMiscPanel() {
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
-		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
+		final ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
 		flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
 		flagsLabel.setHorizontalTextPosition(JLabel.CENTER);
 		flagsLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		flagsLabel.setFont(flagsLabel.getFont().deriveFont(14.0f));
 		panel.add(flagsLabel, BorderLayout.PAGE_START);
 		
-		ImageIcon timeIcon = new ImageIcon(getClass().getResource("/res/img/time-32.png"));
+		final ImageIcon timeIcon = new ImageIcon(getClass().getResource("/res/img/time-32.png"));
 		timeLabel = new JLabel("0:00", timeIcon, JLabel.CENTER);
 		timeLabel.setHorizontalTextPosition(JLabel.CENTER);
 		timeLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		timeLabel.setFont(timeLabel.getFont().deriveFont(14.0f));
 		panel.add(timeLabel, BorderLayout.CENTER);
 
-		ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
+		final ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
 		JButton restartButton = new JButton(restartIcon);
 		restartButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent event) {
+			public void mouseClicked(final MouseEvent event) {
 				gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
 						gui.getController().getMines());
 			}
@@ -87,14 +87,14 @@ class BoardViewImpl extends JPanel implements BoardView {
 	}
 
 	private JButton createFieldButton(final int row, final int column) {
-		JButton button = new JButton();
+		final JButton button = new JButton();
 
 		button.setPreferredSize(new Dimension(25, 25));
 		button.setMargin(new Insets(1, 1, 1, 1));
 		button.setFont(this.getFont().deriveFont(20.0f));
 
 		button.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent event) {
+			public void mouseClicked(final MouseEvent event) {
 				if (buttonField[row][column].isFocusable()) {
 					if (event.isMetaDown()) {
 						gui.getController().placeFlag(row, column);
@@ -108,26 +108,26 @@ class BoardViewImpl extends JPanel implements BoardView {
 		return button;
 	}
 
-	public void setFlagsNumber(int flagsNumber) {
-		StringBuilder stb = new StringBuilder(String.valueOf(flagsNumber));
-		stb.append("/");
+	public void setFlagsNumber(final int flagsNumber) {
+		final StringBuilder stb = new StringBuilder(String.valueOf(flagsNumber));
+		stb.append('/');
 		stb.append(gui.getController().getMines());
 
 		flagsLabel.setText(stb.toString());
 	}
 
-	public void setGameTime(int time) {
-		StringBuilder stb = new StringBuilder(String.valueOf(time / 60));
-		stb.append(":");
+	public void setGameTime(final int time) {
+		final StringBuilder stb = new StringBuilder(String.valueOf(time / 60));
+		stb.append(':');
 		if (time % 60 < 10) {
-			stb.append("0");
+			stb.append('0');
 		}
 		stb.append(time % 60);
 
 		timeLabel.setText(stb.toString());
 	}
 
-	public void revealPosition(int row, int column, int nearbyMines) {
+	public void revealPosition(final int row, final int column, final int nearbyMines) {
 		buttonField[row][column].setContentAreaFilled(false);
 		buttonField[row][column].setFocusable(false);
 		if (nearbyMines == -1) {
@@ -141,12 +141,12 @@ class BoardViewImpl extends JPanel implements BoardView {
 		}
 	}
 
-	public void removeFlag(int row, int column) {
+	public void removeFlag(final int row, final int column) {
 		buttonField[row][column].setIcon(null);
 	}
 
-	public void placeFlag(int row, int column) {
-		ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-20.png"));
+	public void placeFlag(final int row, final int column) {
+		final ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-20.png"));
 		buttonField[row][column].setIcon(flagIcon);
 	}
 }

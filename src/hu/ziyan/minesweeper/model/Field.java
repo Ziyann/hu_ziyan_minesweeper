@@ -14,7 +14,7 @@ public class Field {
 		this.isMine = true;
 	}
 
-	public void setNearbyMines(int nearbyMines) {
+	public void setNearbyMines(final int nearbyMines) {
 		this.nearbyMines = nearbyMines;
 	}
 
@@ -34,11 +34,11 @@ public class Field {
 		this.isFlagged = false;
 	}
 
-	public void setHidden(boolean hidden) {
+	public void setHidden(final boolean hidden) {
 		this.isHidden = hidden;
 	}
 
-	public boolean getIsHidden() {
+	public boolean isHidden() {
 		return this.isHidden;
 	}
 

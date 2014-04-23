@@ -19,7 +19,7 @@ public final class Main {
 	 * Starts the app.
 	 */
 	private static void startApp() {
-		MinesweeperController control = new MinesweeperController();
+		final MinesweeperController control = new MinesweeperController();
 
 		control.startDesktop();
 	}

@@ -12,49 +12,49 @@ import javax.swing.JMenuItem;
 
 class BoardMenuBar extends JMenuBar implements ActionListener {
 
-    private static final long serialVersionUID = 406089122200172021L;
-    private static final String seperator = "seperator";
-    private ViewController gui;
+	private static final long serialVersionUID = 406089122200172021L;
+	private static final String SEPERATOR = "seperator";
+	private final ViewController gui;
 
-    BoardMenuBar(final ViewController gui) {
-        super();
-        this.gui = gui;
+	BoardMenuBar(final ViewController gui) {
+		super();
+		this.gui = gui;
 
-        createMenuPoint(Labels.game, Labels.new_game, seperator, Labels.difficulty, seperator, Labels.exit_label);
-        createMenuPoint(Labels.help, Labels.about);
-    }
+		createMenuPoint(Labels.game, Labels.new_game, SEPERATOR, Labels.difficulty, SEPERATOR, Labels.exit_label);
+		createMenuPoint(Labels.help, Labels.about);
+	}
 
-    private void createMenuPoint(String name, String... subnames) {
-        JMenu menu = new JMenu(name);
+	private void createMenuPoint(final String name, final String... subnames) {
+		final JMenu menu = new JMenu(name);
 
-        this.add(menu);
+		this.add(menu);
 
-        for (String subname : subnames) {
-            if (subname == seperator) {
-                menu.addSeparator();
-            } else {
-                JMenuItem menuItem = new JMenuItem(subname);
-                menu.add(menuItem);
-                menuItem.addActionListener(this);
-            }
-        }
-    }
+		for (final String subname : subnames) {
+			if (subname.equals(SEPERATOR)) {
+				menu.addSeparator();
+			} else {
+				final JMenuItem menuItem = new JMenuItem(subname);
+				menu.add(menuItem);
+				menuItem.addActionListener(this);
+			}
+		}
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String actionCommand = e.getActionCommand();
+	@Override
+	public void actionPerformed(final ActionEvent event) {
+		final String actionCommand = event.getActionCommand();
 
-        if (actionCommand.equals(Labels.difficulty)) {
-            new DifficultyDialog(gui, true);
-        } else if (actionCommand.equals(Labels.new_game)) {
-            gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
-                    gui.getController().getMines());
-        } else if (actionCommand.equals(Labels.exit_label)) {
-            System.exit(0);
-        } else if (actionCommand.equals(Labels.about)) {
-            new AboutDialog(gui, true);
-        }
+		if (actionCommand.equals(Labels.difficulty)) {
+			new DifficultyDialog(gui, true);
+		} else if (actionCommand.equals(Labels.new_game)) {
+			gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
+					gui.getController().getMines());
+		} else if (actionCommand.equals(Labels.exit_label)) {
+			System.exit(0);
+		} else if (actionCommand.equals(Labels.about)) {
+			new AboutDialog(gui, true);
+		}
 
-    }
+	}
 
 }
