@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 public class ViewController {
 
 	private JFrame window;
-	final private MinesweeperController controller;
+	private final MinesweeperController controller;
 	private BoardViewImpl board;
 
 	public void startGUI() {
@@ -29,8 +29,6 @@ public class ViewController {
 
 		final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setLocation(dim.width / 5, dim.height / 5);
-
-		
 
 		controller.newGame(9, 9, 10);
 	}
