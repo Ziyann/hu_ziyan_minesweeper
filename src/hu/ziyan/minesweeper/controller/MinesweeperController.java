@@ -125,8 +125,10 @@ public class MinesweeperController {
 	}
 
 	public void placeFlag(final int row, final int column) {
-		minefield.placeFlag(row, column);
-		gui.placeFlag(row, column);
+		if (minefield.isHidden(row, column)) {
+			minefield.placeFlag(row, column);
+			gui.placeFlag(row, column);
+		}
 	}
 
 	private void removeFlag(final int row, final int column) {
