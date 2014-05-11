@@ -208,4 +208,8 @@ public class MinefieldImpl implements Minefield {
 			controller.revealPosition(pos.row + 1, pos.column - 1); // bottom-left
 		}
 	}
+
+	public boolean isHidden(int row, int column) {
+		return field[row][column].isHidden();
+	}
 }
