@@ -12,7 +12,7 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
+        <javac target="1.7" includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
     <target name="jar" depends="compile">
