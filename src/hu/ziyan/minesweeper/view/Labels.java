@@ -1,23 +1,23 @@
 package hu.ziyan.minesweeper.view;
 
 public final class Labels {
-	public static final String game_name = "Minesweeper";
-	public static final String exit_label = "Exit";
-	public static final String diff_beginner_label = "<html>Beginner<br>10 mines<br>9 x 9 tile grid</html>";
-	public static final String diff_intermediate_label = "<html>Intermediate<br>40 mines<br>16 x 16 tile grid</html>";
-	public static final String diff_advanced_label = "<html>Advanced<br>99 mines<br>16 x 30 tile grid</html>";
-	public static final String diff_custom_label = "Custom";
-	public static final String diff_height = "Height (9-24):";
-	public static final String diff_width = "Width (9-30):";
-	public static final String diff_mines = "Mines (10-668):";
-	public static final String game = "Game";
-	public static final String help = "Help";
-	public static final String about = "About";
-	public static final String new_game = "New game";
-	public static final String difficulty = "Difficulty";
-	public static final String ok = "OK";
-	public static final String cancel = "Cancel";
-	public static final String close = "Close";
+	public static final String MINESWEEPER = "Minesweeper";
+	public static final String EXIT = "Exit";
+	public static final String DIFF_BEGINNER_DESC = "<html>Beginner<br>10 mines<br>9 x 9 tile grid</html>";
+	public static final String DIFF_INTERMEDIATE_DESC = "<html>Intermediate<br>40 mines<br>16 x 16 tile grid</html>";
+	public static final String DIFF_ADVANCED_DESC = "<html>Advanced<br>99 mines<br>16 x 30 tile grid</html>";
+	public static final String CUSTOM = "Custom";
+	public static final String HEIGHT = "Height";
+	public static final String WIDTH = "Width";
+	public static final String MINES = "Mines";
+	public static final String GAME = "Game";
+	public static final String HELP = "Help";
+	public static final String ABOUT = "About";
+	public static final String NEW_GAME = "New game";
+	public static final String DIFFICULTY = "Difficulty";
+	public static final String OK = "OK";
+	public static final String CANCEL = "Cancel";
+	public static final String CLOSE = "Close";
 
 	private Labels() {
 	}

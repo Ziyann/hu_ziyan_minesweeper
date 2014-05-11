@@ -8,6 +8,8 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MINE;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -65,7 +67,7 @@ class BoardViewImpl extends JPanel implements BoardView {
 		flagsLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		flagsLabel.setFont(flagsLabel.getFont().deriveFont(14.0f));
 		panel.add(flagsLabel, BorderLayout.PAGE_START);
-		
+
 		final ImageIcon timeIcon = new ImageIcon(getClass().getResource("/res/img/time-32.png"));
 		timeLabel = new JLabel("0:00", timeIcon, JLabel.CENTER);
 		timeLabel.setHorizontalTextPosition(JLabel.CENTER);
@@ -74,7 +76,7 @@ class BoardViewImpl extends JPanel implements BoardView {
 		panel.add(timeLabel, BorderLayout.CENTER);
 
 		final ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
-		JButton restartButton = new JButton(restartIcon);
+		final JButton restartButton = new JButton(restartIcon);
 		restartButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(final MouseEvent event) {
 				gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
@@ -127,17 +129,17 @@ class BoardViewImpl extends JPanel implements BoardView {
 		timeLabel.setText(stb.toString());
 	}
 
-	public void revealPosition(final int row, final int column, final int nearbyMines) {
+	public void revealPosition(final int row, final int column, final int content) {
 		buttonField[row][column].setContentAreaFilled(false);
 		buttonField[row][column].setFocusable(false);
-		if (nearbyMines == -1) {
+		if (content == MINE) {
 			buttonField[row][column].setText("<html><font color=red>X</font></html>");
-		} else if (nearbyMines == 1) {
+		} else if (content == 1) {
 			buttonField[row][column].setText("<html><font color=blue>1</font></html>");
-		} else if (nearbyMines == 2) {
+		} else if (content == 2) {
 			buttonField[row][column].setText("<html><font color=orange>2</font></html>");
-		} else if (nearbyMines > 2) {
-			buttonField[row][column].setText("<html><font color=red>" + nearbyMines + "</font></html>");
+		} else if (content > 2) {
+			buttonField[row][column].setText("<html><font color=red>" + content + "</font></html>");
 		}
 	}
 

@@ -15,10 +15,26 @@ public class MinesweeperController {
 	private MinefieldImpl minefield;
 	private MinefieldService service;
 	private ViewController gui;
-	private Timer timer;
+	private final Timer timer;
 	private int time;
-	private boolean isRevealingRunning = false;
-	private boolean gameStarted = false;
+	private boolean isRevealingRunning;
+
+	public static final int MAX_ROWS = 24;
+	public static final int MIN_ROWS = 9;
+	public static final int MAX_COLUMNS = 30;
+	public static final int MIN_COLUMNS = 9;
+	public static final int MIN_MINES = 10;
+
+	public static final int MINE = -1;
+
+	public MinesweeperController() {
+		final ActionListener listener = new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				gui.setGameTime(++time);
+			}
+		};
+		timer = new Timer(1000, listener);
+	}
 
 	/**
 	 * Starts the desktop GUI
@@ -29,6 +45,22 @@ public class MinesweeperController {
 	}
 
 	public void newGame(int rows, int columns, int mines) {
+		if (rows > MAX_ROWS) {
+			rows = MAX_ROWS;
+		} else if (rows < MIN_ROWS) {
+			rows = MIN_ROWS;
+		}
+		if (columns > MAX_COLUMNS) {
+			columns = MAX_COLUMNS;
+		} else if (columns < MIN_COLUMNS) {
+			columns = MIN_COLUMNS;
+		}
+		if (mines > ((rows * columns) * 0.9)) {
+			mines = (int) ((rows * columns) * 0.9);
+		} else if (mines < MIN_MINES) {
+			mines = MIN_MINES;
+		}
+
 		this.minefield = new MinefieldImpl(rows, columns, mines);
 		service = new MinefieldService(this, this.minefield);
 		service.makeField();
@@ -46,7 +78,7 @@ public class MinesweeperController {
 		if (row >= 0 && row < getRows() && column >= 0 && column < getColumns()) {
 			removeFlag(row, column);
 			if (minefield.isMine(row, column)) {
-				gui.revealPosition(row, column, -1);
+				gui.revealPosition(row, column, MINE);
 				loseGame();
 			} else {
 				gui.revealPosition(row, column, minefield.getNearbyMinesNumber(row, column));
@@ -60,9 +92,9 @@ public class MinesweeperController {
 	}
 
 	private void winGameIfOver() {
-		if (minefield.getRemainingFields() == 0 && this.gameStarted) {
-			this.gameStarted = false;
-			winGame();
+		if (minefield.getRemainingFields() == 0 && timer.isRunning()) {
+			stopTimer();
+			showEndgameDialog();
 		}
 	}
 
@@ -79,26 +111,20 @@ public class MinesweeperController {
 	 * before the call.
 	 * 
 	 * @param row
-	 *            the clicked row
 	 * @param column
-	 *            the clicked column
 	 */
 	public void fieldClick(final int row, final int column) {
-		if (isFlagged(row, column)) {
+		if (minefield.isFlagged(row, column)) {
 			removeFlag(row, column);
 		} else {
-			if (!gameStarted) {
+			if (!timer.isRunning()) {
 				while (minefield.isMine(row, column)) {
 					newGame(getRows(), getColumns(), getMines());
 				}
-				startGame();
+				startTimer();
 			}
 			revealPosition(row, column);
 		}
-	}
-
-	private boolean isFlagged(final int row, final int column) {
-		return minefield.isFlagged(row, column);
 	}
 
 	public void placeFlag(final int row, final int column) {
@@ -107,7 +133,7 @@ public class MinesweeperController {
 	}
 
 	private void removeFlag(final int row, final int column) {
-		if (isFlagged(row, column)) {
+		if (minefield.isFlagged(row, column)) {
 			minefield.removeFlag(row, column);
 			gui.removeFlag(row, column);
 		}
@@ -119,9 +145,9 @@ public class MinesweeperController {
 	private void loseGame() {
 		stopTimer();
 		revealMines();
-		final Object[] options = { Labels.new_game, Labels.exit_label };
+		final Object[] options = { Labels.NEW_GAME, Labels.EXIT };
 		final int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
-				Labels.game_name, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				Labels.MINESWEEPER, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
 			newGame(getRows(), getColumns(), getMines());
 		} else {
@@ -133,33 +159,18 @@ public class MinesweeperController {
 		for (int row = 0; row < minefield.getRows(); row++) {
 			for (int column = 0; column < minefield.getColumns(); column++) {
 				if (minefield.isMine(row, column)) {
-					gui.revealPosition(row, column, -1);
+					gui.revealPosition(row, column, MINE);
 				}
 			}
 		}
 	}
 
-	private void startGame() {
-		this.gameStarted = true;
-		startTimer();
-	}
-
-	/**
-	 * Stops timer TODO show top ten
-	 */
-	private void winGame() {
-		stopTimer();
-		System.out.println("You won!");
+	private void showEndgameDialog() {
+		// TODO implement
 	}
 
 	private void startTimer() {
 		time = 0;
-		final ActionListener listener = new ActionListener() {
-			public void actionPerformed(final ActionEvent event) {
-				gui.setGameTime(++time);
-			}
-		};
-		timer = new Timer(1000, listener);
 		timer.start();
 	}
 
@@ -167,7 +178,6 @@ public class MinesweeperController {
 		if (timer != null && timer.isRunning()) {
 			timer.stop();
 		}
-		this.gameStarted = false;
 	}
 
 	public int getRows() {

@@ -21,7 +21,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 	public AboutDialog(final ViewController gui, final boolean modal) {
 		super(gui.getWindow(), modal);
 
-		this.setTitle(Labels.about);
+		this.setTitle(Labels.ABOUT);
 		this.setResizable(false);
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -42,7 +42,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 	private JPanel createButtonPanel() {
 		final JPanel panel = new JPanel();
 
-		closeButton = new JButton(Labels.close);
+		closeButton = new JButton(Labels.CLOSE);
 		closeButton.addActionListener(this);
 
 		panel.add(closeButton);
@@ -55,7 +55,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		final ImageIcon mineImage = new ImageIcon(getClass().getResource("/res/img/mine-160.png"));
-		final JLabel picLabel = new JLabel(Labels.game_name, mineImage, JLabel.CENTER);
+		final JLabel picLabel = new JLabel(Labels.MINESWEEPER, mineImage, JLabel.CENTER);
 		picLabel.setHorizontalTextPosition(JButton.CENTER);
 		picLabel.setVerticalTextPosition(JButton.BOTTOM);
 		picLabel.setAlignmentX(CENTER_ALIGNMENT);

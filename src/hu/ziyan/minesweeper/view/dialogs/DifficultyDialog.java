@@ -1,5 +1,9 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MAX_COLUMNS;
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MAX_ROWS;
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MIN_COLUMNS;
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MIN_ROWS;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.ViewController;
 
@@ -24,7 +28,7 @@ import javax.swing.JTextField;
 public class DifficultyDialog extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 2377416291709037701L;
 	private final ViewController gui;
-	private ButtonGroup diffButtonGroup = new ButtonGroup();
+	private final ButtonGroup diffButtonGroup = new ButtonGroup();
 	private JButton btnOk;
 	private JButton btnCancel;
 	private JRadioButton rdbtnCustom;
@@ -38,8 +42,8 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	public DifficultyDialog(final ViewController gui, final boolean modal) {
 		super(gui.getWindow(), modal);
 		this.gui = gui;
-		
-		this.setTitle(Labels.difficulty);
+
+		this.setTitle(Labels.DIFFICULTY);
 		this.setResizable(false);
 
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -58,8 +62,8 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 	private JPanel createButtonsPanel() {
 		final JPanel buttonsPanel = new JPanel();
 
-		btnOk = new JButton(Labels.ok);
-		btnCancel = new JButton(Labels.cancel);
+		btnOk = new JButton(Labels.OK);
+		btnCancel = new JButton(Labels.CANCEL);
 
 		btnOk.addActionListener(this);
 		btnCancel.addActionListener(this);
@@ -76,13 +80,13 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 		customDiffPanel.setLayout(new GridBagLayout());
 		final GridBagConstraints gbc = new GridBagConstraints();
 
-		rdbtnCustom = new JRadioButton(Labels.diff_custom_label);
+		rdbtnCustom = new JRadioButton(Labels.CUSTOM);
 		rdbtnCustom.addActionListener(this);
 		diffButtonGroup.add(rdbtnCustom);
 
-		final JLabel lblHeight = new JLabel(Labels.diff_height);
-		final JLabel lblWidth = new JLabel(Labels.diff_width);
-		final JLabel lblMines = new JLabel(Labels.diff_mines);
+		final JLabel lblHeight = new JLabel(Labels.HEIGHT + " (" + MIN_ROWS + "-" + MAX_ROWS + "):");
+		final JLabel lblWidth = new JLabel(Labels.WIDTH + " (" + MIN_COLUMNS + "-" + MAX_COLUMNS + "):");
+		final JLabel lblMines = new JLabel(Labels.MINES + ": ");
 
 		textFieldHeight = new JFormattedTextField(NumberFormat.getInstance());
 		textFieldWidth = new JFormattedTextField(NumberFormat.getInstance());
@@ -133,9 +137,9 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 
 		predefinedDiffPanel.setLayout(new BoxLayout(predefinedDiffPanel, BoxLayout.PAGE_AXIS));
 
-		rdbtnBeginner = new JRadioButton(Labels.diff_beginner_label);
-		rdbtnIntermediate = new JRadioButton(Labels.diff_intermediate_label);
-		rdbtnAdvanced = new JRadioButton(Labels.diff_advanced_label);
+		rdbtnBeginner = new JRadioButton(Labels.DIFF_BEGINNER_DESC);
+		rdbtnIntermediate = new JRadioButton(Labels.DIFF_INTERMEDIATE_DESC);
+		rdbtnAdvanced = new JRadioButton(Labels.DIFF_ADVANCED_DESC);
 		rdbtnBeginner.addActionListener(this);
 		rdbtnIntermediate.addActionListener(this);
 		rdbtnAdvanced.addActionListener(this);
@@ -150,15 +154,14 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 		predefinedDiffPanel.add(rdbtnAdvanced);
 
 		diffPanel.add(predefinedDiffPanel);
-
 		diffPanel.add(customDiffPanel);
 
 		return diffPanel;
 	}
 
 	@Override
-	public void actionPerformed(final ActionEvent e) {
-		if (e.getSource() == this.btnOk) {
+	public void actionPerformed(final ActionEvent event) {
+		if (event.getSource() == this.btnOk) {
 			if (this.rdbtnBeginner.isSelected()) {
 				gui.getController().newGame(9, 9, 10);
 			} else if (this.rdbtnIntermediate.isSelected()) {
@@ -166,35 +169,20 @@ public class DifficultyDialog extends JDialog implements ActionListener {
 			} else if (this.rdbtnAdvanced.isSelected()) {
 				gui.getController().newGame(16, 30, 99);
 			} else { // custom difficulty
-				int height = Integer.parseInt(textFieldHeight.getText());
-				int width = Integer.parseInt(textFieldWidth.getText());
-				int mines = Integer.parseInt(textFieldMines.getText());
-				if (height > 24) {
-					height = 24;
-				} else if (height < 9) {
-					height = 9;
-				}
-				if (width > 30) {
-					width = 30;
-				} else if (width < 9) {
-					width = 9;
-				}
-				if (mines > ((width * height) * 0.93)) {
-					mines = (int) ((width * height) * 0.93);
-				} else if (mines < 10) {
-					mines = 10;
-				}
+				int height = textFieldHeight.getText().isEmpty() ? 0 : Integer.parseInt(textFieldHeight.getText());
+				int width = textFieldWidth.getText().isEmpty() ? 0 : Integer.parseInt(textFieldWidth.getText());
+				int mines = textFieldMines.getText().isEmpty() ? 0 : Integer.parseInt(textFieldMines.getText());
 				gui.getController().newGame(height, width, mines);
 			}
 			this.setVisible(false);
-		} else if (e.getSource() == this.btnCancel) {
+		} else if (event.getSource() == this.btnCancel) {
 			this.setVisible(false);
-		} else if (e.getSource() == this.rdbtnCustom) {
+		} else if (event.getSource() == this.rdbtnCustom) {
 			this.textFieldHeight.setEnabled(true);
 			this.textFieldWidth.setEnabled(true);
 			this.textFieldMines.setEnabled(true);
-		} else if (e.getSource() == this.rdbtnBeginner || e.getSource() == this.rdbtnAdvanced
-				|| e.getSource() == this.rdbtnIntermediate) {
+		} else if (event.getSource() == this.rdbtnBeginner || event.getSource() == this.rdbtnAdvanced
+				|| event.getSource() == this.rdbtnIntermediate) {
 			this.textFieldHeight.setEnabled(false);
 			this.textFieldWidth.setEnabled(false);
 			this.textFieldMines.setEnabled(false);

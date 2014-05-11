@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 public class ViewController {
 
 	private JFrame window;
-	final private MinesweeperController controller;
+	private final MinesweeperController controller;
 	private BoardViewImpl board;
 
 	public void startGUI() {
@@ -23,7 +23,7 @@ public class ViewController {
 	}
 
 	private void createAndShowGUI() {
-		window = new JFrame(Labels.game_name);
+		window = new JFrame(Labels.MINESWEEPER);
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

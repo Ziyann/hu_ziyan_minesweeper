@@ -31,7 +31,7 @@ public class MinefieldService {
 		/*
 		 * Place mines
 		 */
-		Random rand = new Random();
+		final Random rand = new Random();
 		for (int i = 0; i < minefield.getMines(); i++) {
 			while (true) {
 				final int randomRow = rand.nextInt(minefield.getRows());
@@ -92,7 +92,7 @@ public class MinefieldService {
 				this.column = column;
 			}
 		}
-		List<Position> positions = new ArrayList<Position>();
+		final List<Position> positions = new ArrayList<Position>();
 
 		positions.add(new Position(row, column));
 

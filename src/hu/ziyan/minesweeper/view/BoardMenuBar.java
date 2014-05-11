@@ -20,8 +20,8 @@ class BoardMenuBar extends JMenuBar implements ActionListener {
 		super();
 		this.gui = gui;
 
-		createMenuPoint(Labels.game, Labels.new_game, SEPERATOR, Labels.difficulty, SEPERATOR, Labels.exit_label);
-		createMenuPoint(Labels.help, Labels.about);
+		createMenuPoint(Labels.GAME, Labels.NEW_GAME, SEPERATOR, Labels.DIFFICULTY, SEPERATOR, Labels.EXIT);
+		createMenuPoint(Labels.HELP, Labels.ABOUT);
 	}
 
 	private void createMenuPoint(final String name, final String... subnames) {
@@ -44,14 +44,14 @@ class BoardMenuBar extends JMenuBar implements ActionListener {
 	public void actionPerformed(final ActionEvent event) {
 		final String actionCommand = event.getActionCommand();
 
-		if (actionCommand.equals(Labels.difficulty)) {
+		if (actionCommand.equals(Labels.DIFFICULTY)) {
 			new DifficultyDialog(gui, true);
-		} else if (actionCommand.equals(Labels.new_game)) {
+		} else if (actionCommand.equals(Labels.NEW_GAME)) {
 			gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
 					gui.getController().getMines());
-		} else if (actionCommand.equals(Labels.exit_label)) {
+		} else if (actionCommand.equals(Labels.EXIT)) {
 			System.exit(0);
-		} else if (actionCommand.equals(Labels.about)) {
+		} else if (actionCommand.equals(Labels.ABOUT)) {
 			new AboutDialog(gui, true);
 		}
 
