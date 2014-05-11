@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class ViewController {
-
 	private JFrame window;
 	private final MinesweeperController controller;
 	private BoardViewImpl board;

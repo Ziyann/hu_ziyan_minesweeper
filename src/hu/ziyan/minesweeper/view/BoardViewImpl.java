@@ -145,7 +145,8 @@ class BoardViewImpl extends JPanel implements BoardView {
 		buttonField[row][column].setContentAreaFilled(false);
 		buttonField[row][column].setFocusable(false);
 		if (content == MINE) {
-			buttonField[row][column].setText("<html><font color=red>X</font></html>");
+			final ImageIcon mineIcon = new ImageIcon(getClass().getResource("/res/img/mine-20-red.png"));
+			buttonField[row][column].setIcon(mineIcon);
 		} else if (content == 1) {
 			buttonField[row][column].setText("<html><font color=blue>1</font></html>");
 		} else if (content == 2) {
