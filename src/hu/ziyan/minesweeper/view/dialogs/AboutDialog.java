@@ -1,5 +1,6 @@
 package hu.ziyan.minesweeper.view.dialogs;
 
+import hu.ziyan.minesweeper.Main;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.ViewController;
 
@@ -54,7 +55,7 @@ public class AboutDialog extends JDialog implements ActionListener {
 		final JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-		final ImageIcon mineImage = new ImageIcon(getClass().getResource("/res/img/mine-160.png"));
+		final ImageIcon mineImage = new ImageIcon(Main.class.getResource("/res/img/mine-160.png"));
 		final JLabel picLabel = new JLabel(Labels.MINESWEEPER, mineImage, JLabel.CENTER);
 		picLabel.setHorizontalTextPosition(JButton.CENTER);
 		picLabel.setVerticalTextPosition(JButton.BOTTOM);

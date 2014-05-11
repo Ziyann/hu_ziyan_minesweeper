@@ -83,15 +83,16 @@ public class MinefieldService {
 		minefield.setField(field);
 	}
 
-	public void revealNearbyEmptyFields(final int row, final int column) {
-		class Position {
-			public int row, column;
+	private static class Position {
+		public int row, column;
 
-			public Position(final int row, final int column) {
-				this.row = row;
-				this.column = column;
-			}
+		public Position(final int row, final int column) {
+			this.row = row;
+			this.column = column;
 		}
+	}
+
+	public void revealNearbyEmptyFields(final int row, final int column) {
 		final List<Position> positions = new ArrayList<Position>();
 
 		positions.add(new Position(row, column));

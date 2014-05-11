@@ -30,8 +30,6 @@ public class ViewController {
 		final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		window.setLocation(dim.width / 5, dim.height / 5);
 
-		
-
 		controller.newGame(9, 9, 10);
 	}
 

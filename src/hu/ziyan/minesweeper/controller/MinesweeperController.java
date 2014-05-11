@@ -145,6 +145,13 @@ public class MinesweeperController {
 	private void loseGame() {
 		stopTimer();
 		revealMines();
+		showGameLostDialog();
+	}
+
+	/**
+	 * Shows a dialog with two options: new game or exit
+	 */
+	private void showGameLostDialog() {
 		final Object[] options = { Labels.NEW_GAME, Labels.EXIT };
 		final int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
 				Labels.MINESWEEPER, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
