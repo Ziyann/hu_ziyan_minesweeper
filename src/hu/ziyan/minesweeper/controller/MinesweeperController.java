@@ -6,14 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+import hu.ziyan.minesweeper.model.Minefield;
 import hu.ziyan.minesweeper.model.MinefieldImpl;
-import hu.ziyan.minesweeper.model.services.MinefieldService;
 import hu.ziyan.minesweeper.view.Labels;
 import hu.ziyan.minesweeper.view.ViewController;
 
 public class MinesweeperController {
-	private MinefieldImpl minefield;
-	private MinefieldService service;
+	private Minefield minefield;
 	private ViewController gui;
 	private final Timer timer;
 	private int time;
@@ -61,9 +60,7 @@ public class MinesweeperController {
 			mines = MIN_MINES;
 		}
 
-		this.minefield = new MinefieldImpl(rows, columns, mines);
-		service = new MinefieldService(this, this.minefield);
-		service.makeField();
+		this.minefield = new MinefieldImpl(rows, columns, mines, this);
 		stopTimer();
 		gui.showBoardPanel();
 	}
@@ -101,7 +98,7 @@ public class MinesweeperController {
 	private void revealNearbyEmptyFields(final int row, final int column) {
 		if (!isRevealingRunning) {
 			isRevealingRunning = true;
-			service.revealNearbyEmptyFields(row, column);
+			minefield.revealNearbyEmptyFields(row, column);
 			isRevealingRunning = false;
 		}
 	}

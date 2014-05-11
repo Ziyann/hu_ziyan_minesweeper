@@ -1,6 +1,6 @@
 package hu.ziyan.minesweeper.model;
 
-interface Minefield {
+public interface Minefield {
 	int getRows();
 
 	int getColumns();
@@ -20,6 +20,8 @@ interface Minefield {
 	int getFlagsNumber();
 
 	void reveal(final int row, final int column);
+	
+	void revealNearbyEmptyFields(final int row, final int column);
 
 	boolean isMine(final int row, final int column);
 
