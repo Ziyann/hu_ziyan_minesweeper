@@ -1,5 +1,7 @@
 package hu.ziyan.minesweeper.view;
 
+import static hu.ziyan.minesweeper.controller.MinesweeperController.MINE;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -7,8 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import static hu.ziyan.minesweeper.controller.MinesweeperController.MINE;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -96,8 +96,20 @@ class BoardViewImpl extends JPanel implements BoardView {
 		button.setFont(this.getFont().deriveFont(20.0f));
 
 		button.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(final MouseEvent event) {
-				if (buttonField[row][column].isFocusable()) {
+			boolean pressed;
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				pressed = false;
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				pressed = true;
+			}
+
+			public void mouseReleased(final MouseEvent event) {
+				if (pressed) {
 					if (event.isMetaDown()) {
 						gui.getController().placeFlag(row, column);
 					} else {
