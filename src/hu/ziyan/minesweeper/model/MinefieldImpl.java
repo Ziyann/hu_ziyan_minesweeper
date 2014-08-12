@@ -88,7 +88,7 @@ public class MinefieldImpl implements Minefield {
 		/*
 		 * Make 2D array
 		 */
-		Field[][] field = new Field[getRows()][getColumns()];
+		field = new Field[getRows()][getColumns()];
 		for (int row = 0; row < getRows(); ++row) {
 			for (int column = 0; column < getColumns(); ++column) {
 				field[row][column] = new Field();
@@ -145,8 +145,6 @@ public class MinefieldImpl implements Minefield {
 				}
 			}
 		}
-
-		this.field = field;
 	}
 
 	private static class Position {

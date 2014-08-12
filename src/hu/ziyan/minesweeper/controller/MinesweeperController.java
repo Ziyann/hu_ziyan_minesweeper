@@ -43,6 +43,10 @@ public class MinesweeperController {
 		gui.startGUI();
 	}
 
+	public void restartGame() {
+		newGame(getRows(), getColumns(), getMines());
+	}
+
 	public void newGame(int rows, int columns, int mines) {
 		if (rows > MAX_ROWS) {
 			rows = MAX_ROWS;
@@ -116,7 +120,7 @@ public class MinesweeperController {
 		} else {
 			if (!timer.isRunning()) {
 				while (minefield.isMine(row, column)) {
-					newGame(getRows(), getColumns(), getMines());
+					restartGame();
 				}
 				startTimer();
 			}
@@ -155,7 +159,7 @@ public class MinesweeperController {
 		final int valasztas = JOptionPane.showOptionDialog(gui.getWindow(), "Vesztettél! Mit kívánsz tenni?",
 				Labels.MINESWEEPER, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (valasztas == JOptionPane.YES_OPTION) {
-			newGame(getRows(), getColumns(), getMines());
+			restartGame();
 		} else {
 			System.exit(0);
 		}
@@ -196,9 +200,5 @@ public class MinesweeperController {
 
 	public int getMines() {
 		return minefield.getMines();
-	}
-
-	public int getFlagsNumber() {
-		return minefield.getFlagsNumber();
 	}
 }

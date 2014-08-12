@@ -67,11 +67,13 @@ public class ViewController {
 
 	public void removeFlag(final int row, final int column) {
 		board.removeFlag(row, column);
-		board.setFlagsNumber(getController().getFlagsNumber());
 	}
 
 	public void placeFlag(final int row, final int column) {
 		board.placeFlag(row, column);
-		board.setFlagsNumber(getController().getFlagsNumber());
+	}
+	
+	public void setFlagsCounter(final int flags) {
+		board.setFlagsNumber(flags);
 	}
 }

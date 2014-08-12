@@ -47,8 +47,7 @@ class BoardMenuBar extends JMenuBar implements ActionListener {
 		if (actionCommand.equals(Labels.DIFFICULTY)) {
 			new DifficultyDialog(gui, true);
 		} else if (actionCommand.equals(Labels.NEW_GAME)) {
-			gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
-					gui.getController().getMines());
+			gui.getController().restartGame();
 		} else if (actionCommand.equals(Labels.EXIT)) {
 			System.exit(0);
 		} else if (actionCommand.equals(Labels.ABOUT)) {

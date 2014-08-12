@@ -4,7 +4,7 @@ public class Field {
 	private boolean isMine = false;
 	private boolean isFlagged = false;
 	private boolean isHidden = true;
-	private int nearbyMines;
+	private int nearbyMinesNumber;
 
 	public boolean isMine() {
 		return this.isMine;
@@ -15,11 +15,11 @@ public class Field {
 	}
 
 	public void setNearbyMines(final int nearbyMines) {
-		this.nearbyMines = nearbyMines;
+		this.nearbyMinesNumber = nearbyMines;
 	}
 
 	public int getNearbyMinesNumber() {
-		return this.nearbyMines;
+		return this.nearbyMinesNumber;
 	}
 
 	public boolean isFlagged() {
@@ -43,6 +43,6 @@ public class Field {
 	}
 
 	public boolean isHiddenAndEmpty() {
-		return this.nearbyMines == 0 && !this.isMine && this.isHidden;
+		return this.nearbyMinesNumber == 0 && !this.isMine && this.isHidden;
 	}
 }

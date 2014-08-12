@@ -1,6 +1,7 @@
 package hu.ziyan.minesweeper.view;
 
 import static hu.ziyan.minesweeper.controller.MinesweeperController.MINE;
+import hu.ziyan.minesweeper.Main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -61,26 +62,25 @@ class BoardViewImpl extends JPanel implements BoardView {
 		final JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
-		final ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-32.png"));
+		final ImageIcon flagIcon = new ImageIcon(Main.class.getResource("/res/img/flag-32.png"));
 		flagsLabel = new JLabel("0/10", flagIcon, JLabel.CENTER);
 		flagsLabel.setHorizontalTextPosition(JLabel.CENTER);
 		flagsLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		flagsLabel.setFont(flagsLabel.getFont().deriveFont(14.0f));
 		panel.add(flagsLabel, BorderLayout.PAGE_START);
 
-		final ImageIcon timeIcon = new ImageIcon(getClass().getResource("/res/img/time-32.png"));
+		final ImageIcon timeIcon = new ImageIcon(Main.class.getResource("/res/img/time-32.png"));
 		timeLabel = new JLabel("0:00", timeIcon, JLabel.CENTER);
 		timeLabel.setHorizontalTextPosition(JLabel.CENTER);
 		timeLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		timeLabel.setFont(timeLabel.getFont().deriveFont(14.0f));
 		panel.add(timeLabel, BorderLayout.CENTER);
 
-		final ImageIcon restartIcon = new ImageIcon(getClass().getResource("/res/img/restart-32.png"));
+		final ImageIcon restartIcon = new ImageIcon(Main.class.getResource("/res/img/restart-32.png"));
 		final JButton restartButton = new JButton(restartIcon);
 		restartButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(final MouseEvent event) {
-				gui.getController().newGame(gui.getController().getRows(), gui.getController().getColumns(),
-						gui.getController().getMines());
+				gui.getController().restartGame();
 			}
 		});
 		panel.add(restartButton, BorderLayout.PAGE_END);
@@ -145,7 +145,7 @@ class BoardViewImpl extends JPanel implements BoardView {
 		buttonField[row][column].setContentAreaFilled(false);
 		buttonField[row][column].setFocusable(false);
 		if (content == MINE) {
-			final ImageIcon mineIcon = new ImageIcon(getClass().getResource("/res/img/mine-20-red.png"));
+			final ImageIcon mineIcon = new ImageIcon(Main.class.getResource("/res/img/mine-20-red.png"));
 			buttonField[row][column].setIcon(mineIcon);
 		} else if (content == 1) {
 			buttonField[row][column].setText("<html><font color=blue>1</font></html>");
@@ -161,7 +161,7 @@ class BoardViewImpl extends JPanel implements BoardView {
 	}
 
 	public void placeFlag(final int row, final int column) {
-		final ImageIcon flagIcon = new ImageIcon(getClass().getResource("/res/img/flag-20.png"));
+		final ImageIcon flagIcon = new ImageIcon(Main.class.getResource("/res/img/flag-20.png"));
 		buttonField[row][column].setIcon(flagIcon);
 	}
 }
